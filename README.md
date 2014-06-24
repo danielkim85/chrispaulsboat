@@ -1,4 +1,3 @@
 chrispaulsboat
 ==============
-README
-git
+READ ME ME ME ME MEEEEEE!
