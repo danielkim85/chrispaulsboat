@@ -1,6 +1,7 @@
 var DONNA = "261913437331658";
 var FAKE = "1234";
 var LOVED = false;
+var myId = null;
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
 	console.log('statusChangeCallback');
@@ -11,17 +12,17 @@ function statusChangeCallback(response) {
 	// for FB.getLoginStatus().
 	if (response.status === 'connected') {
   		// Logged into your app and Facebook.
-		loadInfo();
+		
 		FB.api(
 			"/me/friends/261913437331658",
 			function (response) {
 			if (response && !response.error){
 				LOVED = true;
-				renderCal();
 			}
 			else{
 				LOVED = false;
 			}
+			loadInfo();
 			
 		}
 	);	
@@ -73,8 +74,10 @@ window.fbAsyncInit = function() {
 function loadInfo() {
     console.log('Welcome!  Fetching your information.... ');
 	FB.api('/me', function(response) {
+		myId = response.id;
   		console.log('Successful login for: ' + response.name);
   		document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
+		renderCal();
     });
 }

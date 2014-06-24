@@ -2,17 +2,23 @@
 	<head></head>
 	<body>
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
 		<script src="https://raw.githubusercontent.com/moment/moment/develop/moment.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.1/fullcalendar.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.1/fullcalendar.css">
-		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.1/fullcalendar.print.css">
+		<link rel="stylesheet" type="text/css" href="jquery-ui-1.10.4.custom/css/flick/jquery-ui-1.10.4.custom.min.css">
 		<link rel="stylesheet" type="text/css" href="index.css">
 		<script src="calendar.js"></script>
 		<script src="index.js"></script>
-		<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();" autologoutlink="true">
-		</fb:login-button>
-		<div id="status">
+		<div id="main">
+			<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();" autologoutlink="true">
+			</fb:login-button>
+			<div id="status">
+			</div>
+			<div id="calendar"></div>			
 		</div>
-		<div id="calendar"></div>
+		<div id="dialog" title="Basic dialog" style="display:none;">
+		  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+		</div>
 	</body>
 </html>
