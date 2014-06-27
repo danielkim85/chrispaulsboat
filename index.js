@@ -1,4 +1,5 @@
 var DONNA = "261913437331658";
+var admin = false;
 var FAKE = "1234";
 var LOVED = false;
 var myId = null;

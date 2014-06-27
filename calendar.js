@@ -5,6 +5,23 @@ function renderCal(){
 	    eventClick: function() {
 	        $( "#dialog" ).dialog();
 	    },
+	    dayClick: function(date) {
+	    	if(admin){
+	    		var r = confirm("Create an event on " + date.format() + "?");
+	    		if(r){
+					$.ajax({
+						type: "POST",
+				  		url: "python/create_event.py",
+				  		data: { date: date.format() }
+					})
+				  	.done(function( msg ) {
+				    	alert( "Data Saved.");
+				    	//TODO refresh the calendar
+				  	});	    			
+	    		}
+	    		console.info("create an event with : " + date.format());
+	    	}
+	    },
 		events: [
 			{
 				title: 'All Day Event',
@@ -47,7 +64,7 @@ function renderCal(){
 
     });
     if(myId == "10103785338762708"){
-    	console.info("populate admin rows");
+    	admin = true;
     }
     
 }
