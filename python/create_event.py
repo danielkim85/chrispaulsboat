@@ -6,8 +6,8 @@ print "Content-type: text/html\n\n"
 print common.ADMINS
 if common.check_auth():
     data = cgi.FieldStorage();
-    conn = MySQLdb.connect (host = "207.210.106.21",user = "cpboat",passwd = "ZH7bjgPZ",db = "cpboat")
-    cursor = conn.cursor ()
+    conn = common.conn_db();
+    cursor = conn.cursor ();
     cursor.execute("insert into events(date) values(%s)", [data['date'].value])
     conn.commit()
     cursor.close()

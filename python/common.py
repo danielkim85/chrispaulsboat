@@ -5,6 +5,10 @@ ADMINS = ["10103785338762708"]
 import facebook
 import os
 import urllib2
+import MySQLdb
+
+def conn_db():
+    return MySQLdb.connect (host = "207.210.106.21",user = "cpboat",passwd = "ZH7bjgPZ",db = "cpboat")
 
 def check_auth():
     #try:
