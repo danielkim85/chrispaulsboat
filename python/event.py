@@ -28,6 +28,11 @@ elif action == 'create':
     my_date = data['date'].value;
     if common.am_i_t_pain(access_token):
         cursor.execute("insert into events(date) values(%s)", [my_date]);
+elif action == 'cancel':
+    #make sure i am t-pain
+    my_date = data['date'].value;
+    if common.am_i_t_pain(access_token):
+        cursor.execute("delete from events where date = %s", [my_date]);
 elif action == 'get':
     #anyone
     cursor.execute("select * from events where date >= %s and date <= %s", [data['start'].value, data['end'].value]);
