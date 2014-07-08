@@ -2,11 +2,11 @@ var DONNA = "261913437331658";
 var admin = false;
 var FAKE = "1234";
 var LOVED = false;
-var myId = null;
+var MYID = null;
+var ACCESS_TOKEN
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
 	console.log('statusChangeCallback');
-	console.log(response);
 	// The response object is returned with a status field that lets the
 	// app know the current login status of the person.
 	// Full docs on the response object can be found in the documentation
@@ -73,10 +73,14 @@ window.fbAsyncInit = function() {
 }(document, 'script', 'facebook-jssdk'));
 
 function loadInfo() {
+     ACCESS_TOKEN =   FB.getAuthResponse()['accessToken'];
+     //console.log('Access Token = '+ access_token);
+     
     console.log('Welcome!  Fetching your information.... ');
-	FB.api('/me', function(response) {
-		myId = response.id;
-  		console.log('Successful login for: ' + response.name);
+	FB.api('/me',  function(response) {
+		MYID = "response.authResponse.userID;";
+		console.info(response.id);
+  		console.log('Successful login for: ' + response.link);
   		document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
 		renderCal();

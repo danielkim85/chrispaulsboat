@@ -3,7 +3,6 @@ import MySQLdb
 import cgi
 
 print "Content-type: text/html\n\n"
-print common.ADMINS
 if common.check_auth():
     data = cgi.FieldStorage();
     conn = common.conn_db();

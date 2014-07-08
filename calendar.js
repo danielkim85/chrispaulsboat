@@ -1,8 +1,20 @@
 function renderCal(){
+	$("#join").click(function(){
+		var date = $(".ui-dialog-title").html();
+		console.info("joining the id " + MYID + " " + date);
+		$.ajax({
+			type: "POST",
+	  		url: "python/join_event.py",
+	  		data: { date: date, access_token: ACCESS_TOKEN }
+		})
+	  	.done(function( msg ) {
+	  	});	
+	});
     $('#calendar').fullCalendar({
         // put your options and callbacks here
         //defaultDate: '2014-06-12',
-	    eventClick: function() {
+	    eventClick: function(event) {
+	    	$("#dialog").attr("title",event.start.format());
 	        $( "#dialog" ).dialog();
 	    },
 	    dayClick: function(date) {
@@ -24,7 +36,7 @@ function renderCal(){
 		events: '/python/get_events.py'
 
     });
-    if(myId == "10103785338762708"){
+    if(MYID == "10103785338762708"){
     	admin = true;
     }
     
