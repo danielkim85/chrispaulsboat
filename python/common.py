@@ -16,5 +16,15 @@ def am_i_t_pain(access_token):
         return True;
     else:
         return False;
+    
 def am_i_friends_w_t_pain(access_token):
-    return true;
+    graph = facebook.GraphAPI(access_token)
+    for t_pain in config.T_PAIN:
+        try:
+            if graph.get_object(t_pain)['id'] != '':
+                return True;
+            else:
+                return False;
+        except:
+            pass;
+    return False;

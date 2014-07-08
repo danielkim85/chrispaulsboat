@@ -1,43 +1,49 @@
 function renderCal(){
+	//check if t-pain is in town
+	$.ajax({
+		type: "POST",
+  		url: "./python/t_pain.py",
+  		data: { access_token: ACCESS_TOKEN },
+  		dataType : "json"
+	})
+  	.done(function( json ) {
+  		T_PAIN = json.t_pain == "1";
+  		T_PAIN_FRIENDS = json.friends == "1";
+  	});		
+	
 	$("#join").click(function(){
 		var date = $(".ui-dialog-title").html();
 		console.info("joining the id " + MYID + " " + date);
 		$.ajax({
 			type: "POST",
-	  		url: "python/join_event.py",
-	  		data: { date: date, access_token: ACCESS_TOKEN }
+	  		url: "./python/event.py",
+	  		data: { date: date, access_token: ACCESS_TOKEN, action:"join" }
 		})
 	  	.done(function( msg ) {
 	  	});	
 	});
+    
     $('#calendar').fullCalendar({
-        // put your options and callbacks here
-        //defaultDate: '2014-06-12',
 	    eventClick: function(event) {
 	    	$("#dialog").attr("title",event.start.format());
 	        $( "#dialog" ).dialog();
 	    },
 	    dayClick: function(date) {
-	    	if(admin){
+	    	if(T_PAIN){
 	    		var r = confirm("Create an event on " + date.format() + "?");
 	    		if(r){
 					$.ajax({
 						type: "POST",
-				  		url: "python/create_event.py",
-				  		data: { date: date.format() }
+				  		url: "./python/event.py",
+				  		data: { date: date.format(), action:"create", access_token: ACCESS_TOKEN }
 					})
 				  	.done(function( msg ) {
 				    	location.reload();
 				  	});	    			
 	    		}
-	    		console.info("create an event with : " + date.format());
 	    	}
 	    },
-		events: '/python/get_events.py'
+		events: './python/event.py?action=get'
 
-    });
-    if(MYID == "10103785338762708"){
-    	admin = true;
-    }
-    
+    });    
 }

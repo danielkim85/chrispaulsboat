@@ -3,7 +3,7 @@ import facebook
 import os
 import urllib2
 print "Content-type: text/html\n\n"
-graph = facebook.GraphAPI("CAAUiHKYqNEQBAJZAZB8Pw4P0LyjzgzYjtMYypp7ca3ZBsXCaQnUwlFGrkCAa5VwIADbpNjCZAXV611YaCudH7sGrvvFZA5zGRMZBcbIirf7BBzYrsxrZBECRZA9YlhQVl7ZC6tTej8XTM8zxth0usAJBHZBcVzkQlzZC9vrHglrW55PvZAZAUGEYeRvlzzdYGLSbgZCisZD")
-profile = graph.get_object("/me")
+graph = facebook.GraphAPI("CAAUiHKYqNEQBAC1ZB5IM9Xa7yeShQs5BcwH4AA6v9y8TUHnI2A6hnLuwoVLZCtlEFnEJ9gypKHXaXkU6Uw9XkbQWaz7LnIQZA9fo6zcZAiVuEXw01bGD6f54M4vZCO8LZBAoGdKfHIOJ4KP0c1reZC9TZCHzu9d0G71gQaG33TIdwwWzxKhGg722XP1BCvZBycZCgZD")
+profile = graph.get_object("10103789738051498")
 print profile
 #posts = graph.get_connections(profile['id'])

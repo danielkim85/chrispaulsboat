@@ -1,32 +1,21 @@
-var DONNA = "261913437331658";
-var admin = false;
-var FAKE = "1234";
-var LOVED = false;
-var MYID = null;
-var ACCESS_TOKEN
+var T_PAIN = false;
+var T_PAIN_FRIENDS = false;
+var MY_ID = null;
+var ACCESS_TOKEN = null;
+
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
-	console.log('statusChangeCallback');
+	
 	// The response object is returned with a status field that lets the
 	// app know the current login status of the person.
 	// Full docs on the response object can be found in the documentation
 	// for FB.getLoginStatus().
+	
 	if (response.status === 'connected') {
   		// Logged into your app and Facebook.
-		
-		FB.api(
-			"/me/friends/261913437331658",
-			function (response) {
-			if (response && !response.error){
-				LOVED = true;
-			}
-			else{
-				LOVED = false;
-			}
-			loadInfo();
-			
-		}
-	);	
+		ACCESS_TOKEN =   FB.getAuthResponse()['accessToken'];
+     	loadInfo();
+
 	} else if (response.status === 'not_authorized') {
 		// The person is logged into Facebook, but not your app.
 		document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
@@ -54,15 +43,12 @@ window.fbAsyncInit = function() {
 		version    : 'v2.0' // use version 2.0
   	});
 
-
-
   	FB.getLoginStatus(function(response) {
     	statusChangeCallback(response);
   	});
 
 };
 
- 		
 // Load the SDK asynchronously
 (function(d, s, id) {
 	var js, fjs = d.getElementsByTagName(s)[0];
@@ -73,14 +59,8 @@ window.fbAsyncInit = function() {
 }(document, 'script', 'facebook-jssdk'));
 
 function loadInfo() {
-     ACCESS_TOKEN =   FB.getAuthResponse()['accessToken'];
-     //console.log('Access Token = '+ access_token);
-     
-    console.log('Welcome!  Fetching your information.... ');
 	FB.api('/me',  function(response) {
-		MYID = "response.authResponse.userID;";
-		console.info(response.id);
-  		console.log('Successful login for: ' + response.link);
+		MY_ID = response.id;
   		document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
 		renderCal();
