@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import common
 import MySQLdb
 import cgi
@@ -35,7 +37,8 @@ elif action == 'get':
     print_ = "["
     for i in range(0,len(rows)):
         print_ += "{\"title\": \"Sign up\",\"start\":\"" + str(rows[i][1]).split(" ")[0] + "\"},"
-    print_ = print_[:len(print_)-1]
+    if len(print_) > 1:
+        print_ = print_[:len(print_)-1]
     print_ += "]"
     print print_    
 

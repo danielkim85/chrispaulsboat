@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import common
 import facebook
 import os

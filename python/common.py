@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import facebook
 import MySQLdb
 import config
