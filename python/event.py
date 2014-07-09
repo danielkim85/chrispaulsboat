@@ -18,12 +18,7 @@ action = data['action'].value;
 conn = common.conn_db();
 cursor = conn.cursor ();
 
-if action == 'join':
-    #make sure i am friends with the t-pain
-    my_date = data['date'].value;
-    if am_i_friends_w_t_pain(access_token):
-        cursor.execute("insert into rosters(date,user,active) values(%s,%s,%s)", [my_date, my_id,1]);
-elif action == 'create':
+if action == 'create':
     #make sure i am t-pain
     my_date = data['date'].value;
     if common.am_i_t_pain(access_token):
