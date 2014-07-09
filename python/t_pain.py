@@ -13,5 +13,7 @@ print_ += "\",\"friends\":\"";
 print_ += "1" if common.am_i_friends_w_t_pain(access_token) else "0";
 print_ += "\"}";
 
+#test
 print print_
+
 
