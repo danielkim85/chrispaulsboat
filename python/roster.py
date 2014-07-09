@@ -30,6 +30,16 @@ elif action == 'check':
     cursor.execute("select count(id) from rosters where date = %s and user = %s and active = 1", [my_date, my_id]);
     rows = cursor.fetchall()
     print rows[0][0]
+elif action == 'get':
+    #anyone
+    cursor.execute("select user from rosters where date = %s and active = 1", [my_date, my_id]);
+    rows = cursor.fetchall()
+    print_ = "["
+    for i in range(0,len(rows)):
+        print_ += "{\"user\":\"" + str(rows[i][0]) + "\"},"
+    print_ = print_[:len(print_)-1]
+    print_ += "]"
+    print print_   
 conn.commit();
 cursor.close();
 conn.close();
