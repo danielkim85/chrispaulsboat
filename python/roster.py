@@ -35,7 +35,7 @@ elif action == 'check':
 
 elif action == 'get':
     #anyone
-    cursor.execute("select user from rosters where date = %s and active = 1", [my_date]);
+    cursor.execute("select distinct user from rosters where date = %s and active = 1", [my_date]);
     rows = cursor.fetchall()
     print_ = "["
     for i in range(0,len(rows)):

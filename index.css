@@ -8,3 +8,6 @@ body{
 .fc-event{
 	cursor:pointer;
 }
+#roster{
+	margin-bottom:10px;
+}

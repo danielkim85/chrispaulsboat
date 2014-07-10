@@ -126,8 +126,8 @@ function renderCal(){
     
     $('#calendar').fullCalendar({
 	    eventClick: function(event) {
-	    	$("#dialog").attr("title",event.start.format());
-	        $( "#dialog" ).dialog();
+	    	$("#roster").html("");
+	        $("#dialog" ).dialog({title : event.start.format()});
 	        $("#dialog").block({ message: null }); 
 			$.ajax({
 				type: "POST",
@@ -151,11 +151,16 @@ function renderCal(){
 			  		dataType:"json"
 				})
 			  	.done(function( json ) {
+					
 			    	for(var i = 0; i < json.length; i++){
-			    		$("#roster").append("<div>" + json[i].user + "</div>");
+			    		console.info("calling" + json[i].user);
+						FB.api(json[i].user,  function(response) {
+							$("#roster").append("<div><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
+					    });
+			    		$("#dialog").unblock();
 			    	}
 			  	});	  		    	
-		    	$("#dialog").unblock();
+		    	
 		  	});	    
 	    },
 	    dayClick: function(date, allDay, jsEvent, view) {            
@@ -179,6 +184,7 @@ function renderCal(){
 		  else
 		  	$("#calendar").block({ message: null });
 		},
+		//get how many ppl joined in (5)
 		events: './python/event.py?action=get'
 
     });    
