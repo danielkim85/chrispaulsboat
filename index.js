@@ -180,9 +180,9 @@ function renderCal(){
 	    },
 	    loading: function(bool) {
 		  if (!bool) 
-		  	$("#calendar").unblock();
+		  	$(".fc-content").unblock();
 		  else
-		  	$("#calendar").block({ message: null });
+		  	$(".fc-content").block({ message: null });
 		},
 		//get how many ppl joined in (5)
 		events: './python/event.py?action=get'
