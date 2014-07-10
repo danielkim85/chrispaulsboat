@@ -11,13 +11,21 @@
 		<link rel="stylesheet" type="text/css" href="index.css">
 		<script src="index.js"></script>
 		<div id="main">
+			<h1>
+				CHRIS PAUL'S BOAT (.com)
+			</h1>
+			<h3>
+				 WHERE YOUR DREAMS COME TRUE
+			</h3>
 			<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();" autologoutlink="true">
 			</fb:login-button>
-			<span id="status">
-			</span>
+			<div id="status">
+			</div>
 			<div id="calendar"></div>			
 		</div>
 		<div id="dialog" title="Basic dialog" style="display:none;">
+			<div style="display:none;" id="no_compete">Be the first one to join!</div>
+			<div style="display:none;" id="compete">Your competitions are:</div>
 			<div id="roster"></div>
 			<button id="join">Join</button>
 			<button id="withdraw" style="display:none;">Withdraw</button>

@@ -54,7 +54,22 @@ function loadInfo() {
 		MY_ID = response.id;
   		document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
-		renderCal();
+      	
+		//check if t-pain is in town
+		$.ajax({
+			type: "POST",
+	  		url: "./python/t_pain.py",
+	  		data: { access_token: ACCESS_TOKEN },
+	  		dataType : "json"
+		})
+	  	.done(function( json ) {
+	  		T_PAIN = json.t_pain == "1";
+	  		T_PAIN_FRIENDS = json.friends == "1";
+	  		if(T_PAIN){
+	  			$("#cancel").show();
+	  		}
+	  	});		
+	
     });
 }
 
@@ -64,22 +79,7 @@ function renderCal(){
       .click(function( event ) {
         event.preventDefault();
       });
-      	
-	//check if t-pain is in town
-	$.ajax({
-		type: "POST",
-  		url: "./python/t_pain.py",
-  		data: { access_token: ACCESS_TOKEN },
-  		dataType : "json"
-	})
-  	.done(function( json ) {
-  		T_PAIN = json.t_pain == "1";
-  		T_PAIN_FRIENDS = json.friends == "1";
-  		if(T_PAIN){
-  			$("#cancel").show();
-  		}
-  	});		
-	
+
 	$("#join").click(function(){
 		var date = $(".ui-dialog-title").html();
 		$.ajax({
@@ -125,43 +125,54 @@ function renderCal(){
 	});
     
     $('#calendar').fullCalendar({
+    	height: 400,
 	    eventClick: function(event) {
-	    	$("#roster").html("");
-	        $("#dialog" ).dialog({title : event.start.format()});
-	        $("#dialog").block({ message: null }); 
-			$.ajax({
-				type: "POST",
-		  		url: "./python/roster.py",
-		  		data: { action:"check", date: event.start.format(), access_token: ACCESS_TOKEN}
-			})
-		  	.done(function( msg ) {
-		    	if(parseInt(msg) > 0){
-		    		$("#withdraw").show();
-		    		$("#join").hide();
-		    		
-		    	}
-		    	else{
-		    		$("#withdraw").hide();
-		    		$("#join").show();
-		    	}
+	    	if(MY_ID == null){
+	    		alert("You must log in to join or view the roster!");
+	    	}
+			else{
+		    	$("#roster").html("");
+		        $("#dialog" ).dialog({title : event.start.format()});
+		        $("#dialog").block({ message: null }); 
 				$.ajax({
 					type: "POST",
 			  		url: "./python/roster.py",
-			  		data: { date: event.start.format(), action:"get"},
-			  		dataType:"json"
+			  		data: { action:"check", date: event.start.format(), access_token: ACCESS_TOKEN}
 				})
-			  	.done(function( json ) {
-					
-			    	for(var i = 0; i < json.length; i++){
-			    		console.info("calling" + json[i].user);
-						FB.api(json[i].user,  function(response) {
-							$("#roster").append("<div><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
-					    });
-			    		$("#dialog").unblock();
+			  	.done(function( msg ) {
+			    	if(parseInt(msg) > 0){
+			    		$("#withdraw").show();
+			    		$("#join").hide();
+			    		
 			    	}
-			  	});	  		    	
-		    	
-		  	});	    
+			    	else{
+			    		$("#withdraw").hide();
+			    		$("#join").show();
+			    	}
+					$.ajax({
+						type: "POST",
+				  		url: "./python/roster.py",
+				  		data: { date: event.start.format(), action:"get"},
+				  		dataType:"json"
+					})
+				  	.done(function( json ) {
+						if(json.length > 0){
+							$("#compete").show();
+							$("#no_compete").hide();
+						}
+						else{
+							$("#compete").hide();
+							$("#no_compete").show();						
+						}
+				    	for(var i = 0; i < json.length; i++){
+							FB.api(json[i].user,  function(response) {
+								$("#roster").append("<div style='margin-bottom:5px;'><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
+						    });
+				    		$("#dialog").unblock();
+				    	}
+				  	});			  		    	
+		  		});	  
+		  	}  
 	    },
 	    dayClick: function(date, allDay, jsEvent, view) {            
 	    	if(T_PAIN){
@@ -189,3 +200,6 @@ function renderCal(){
 
     });    
 }
+$(document).ready(function(){
+	renderCal();
+});
