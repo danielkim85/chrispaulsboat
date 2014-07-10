@@ -74,7 +74,7 @@ function loadInfo() {
 }
 
 function renderCal(){
-    $( "input[type=submit], a, button" )
+    $( "input[type=submit], button" )
       .button()
       .click(function( event ) {
         event.preventDefault();

@@ -32,9 +32,6 @@ elif action == 'cancel':
         cursor.execute("delete from events where date = %s", [my_date]);
 elif action == 'get':
     #anyone
-    """
-select * from events t1 join (select count(distinct user), date from rosters where active = 1 group by date) as t2 on t1.date = t2.date 
-    """
     cursor.execute("select * from events t1 join (select count(distinct user), date from rosters where active = 1 group by date) as t2 on t1.date = t2.date where t1.date >= %s and t1.date <= %s", [data['start'].value, data['end'].value]);
     rows = cursor.fetchall()
     print_ = "["

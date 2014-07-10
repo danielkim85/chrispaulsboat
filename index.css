@@ -20,6 +20,7 @@ body{
 }
 #status{
 	float:right;
+	margin-top:-5px;
 }
 .fc-content{
 	background-color:white;
@@ -35,4 +36,15 @@ h1{
 h3{
 	margin-top:-10px;
 	margin-left:2px;
+}
+.fb_iframe_widget{
+	//margin-top:-65px;
+}
+#footer{
+	color:white;
+	text-align:center;
+	margin-top:10px;
+}
+#footer a{
+	color:white;
 }
