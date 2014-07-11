@@ -26,6 +26,10 @@ function checkLoginState() {
 	});
 }
 
+var logout_event = function(response) {
+	location.reload();
+}
+
 window.fbAsyncInit = function() {
 	FB.init({
     	appId      : '1444881325765700',
@@ -37,7 +41,8 @@ window.fbAsyncInit = function() {
   	FB.getLoginStatus(function(response) {
     	statusChangeCallback(response);
   	});
-
+	
+	FB.Event.subscribe('auth.logout', logout_event);
 };
 
 // Load the SDK asynchronously
