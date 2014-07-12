@@ -57,6 +57,7 @@ window.fbAsyncInit = function() {
 function loadInfo() {
 	FB.api('/me',  function(response) {
 		MY_ID = response.id;
+		console.info(MY_ID);
   		document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
       	
@@ -72,6 +73,10 @@ function loadInfo() {
 	  		T_PAIN_FRIENDS = json.friends == "1";
 	  		if(T_PAIN){
 	  			$("#cancel").show();
+	  		}
+	  		if(!T_PAIN_FRIENDS){
+	  			$("#action").hide();
+	  			$("#know_t_pain_first").show();
 	  		}
 	  	});		
 	

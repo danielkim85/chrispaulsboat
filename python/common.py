@@ -21,12 +21,8 @@ def am_i_t_pain(access_token):
     
 def am_i_friends_w_t_pain(access_token):
     graph = facebook.GraphAPI(access_token)
+
     for t_pain in config.T_PAIN:
-        try:
-            if graph.get_object(t_pain)['id'] != '':
-                return True;
-            else:
-                return False;
-        except:
-            pass;
+        if len(graph.get_object("me/friends/" + t_pain)['data']) > 0:
+            return True;
     return False;
