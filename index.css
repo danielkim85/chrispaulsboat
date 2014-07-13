@@ -62,7 +62,7 @@ h3{
 	float:left;
 	width:50%;
 }
-#calendar,#footer,#images{
+#calendar,#footer{
 	float:left;
 	width:100%;
 }
@@ -73,11 +73,12 @@ h3{
 	text-align:right;
 }
 #images{
-    margin-left: -5px;
-    margin-top: 15px;
-    width:900px;
+    float: left;
+    margin-left: -112px;
+    margin-top: -383px;
+    width: 114px;
 }
-
 #images img{
-	width:100px;	
+	width:101px;
+	margin-bottom:10px;
 }
