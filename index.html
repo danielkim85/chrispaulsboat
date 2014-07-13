@@ -6,26 +6,37 @@
 		<script src="./third_party/moment.js"></script>
 		<script src="./third_party/jquery.blockUI.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.1/fullcalendar.min.js"></script>
+		<link rel="stylesheet" href="./third_party/fancybox2.0/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+		<script type="text/javascript" src="./third_party/fancybox2.0/jquery.fancybox.pack.js?v=2.1.5"></script>
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.1/fullcalendar.css">
 		<link rel="stylesheet" type="text/css" href="./third_party/jquery-ui-1.10.4.custom/css/flick/jquery-ui-1.10.4.custom.min.css">
 		<link rel="stylesheet" type="text/css" href="index.css">
 		<script src="index.js"></script>
 		<div id="main">
-			<h1>
-				CHRIS PAUL'S BOAT [.COM]
+			<h1 id="header">
+				CHRISPAULSBOAT.COM
 			</h1>
-			<h3>
+			<div id="login">
+				<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();" autologoutlink="true">
+				</fb:login-button>
+				<div id="status">
+				</div>				
+			</div>
+			<h3 id="subheader">
 				 WHERE ALL YOUR DREAMS COME TRUE
 			</h3>
-			<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();" autologoutlink="true">
-			</fb:login-button>
-			<div id="status">
-			</div>
 			<div id="calendar"></div>
-			<div id="footer">
-				Created by <a target="_blank" href="https://github.com/danielkim85">DK</a> || View my sauce <a target="_blank" href="https://github.com/danielkim85/chrispaulsboat">@GitHub</a>
+			<div id="images">
+				<a class="fancybox" rel="group" href="./img/polariod.png"><img id="polaroid" src="./img/polariod.png" /></a>			
+				<a class="fancybox" rel="group" href="./img/polariod2.png"><img id="polaroid2" src="img/polaroid2.png" /></a>				
+				<a class="fancybox" rel="group" href="./img/polariod3.png"><img id="polaroid3" src="img/polaroid3.png" /></a>
 			</div>
+			<div id="footer">
+				Created by <a target="_blank" href="https://github.com/danielkim85">DK</a> || View my sauce @ <a target="_blank" href="https://github.com/danielkim85/chrispaulsboat">GitHub</a>
+			</div>
+
 		</div>
+		
 		<div id="dialog" title="Basic dialog" style="display:none;">
 			<div style="display:none;" id="no_compete">Be the first one to join!</div>
 			<div style="display:none;" id="compete">Your competitors are</div>

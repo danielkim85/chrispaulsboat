@@ -3,7 +3,7 @@ body{
 	font-size:14px;
 	color:#666666;
 	margin-top:20px;
-	background-image:url('./img/wave.jpg');
+	background-image:url('./img/stardust.png');
 }
 #main{
 	margin:0 auto;
@@ -19,8 +19,8 @@ body{
 	text-align:center;
 }
 #status{
-	float:right;
-	margin-top:-5px;
+	//float:right;
+	//margin-top:-5px;
 }
 .fc-content{
 	background-color:white;
@@ -51,4 +51,33 @@ h3{
 #know_t_pain_first{
 	display:none;
 	color:blue;
+}
+
+#polaroid{
+    //margin-left: -280px;
+    //margin-top: -321px;
+}
+
+#header,#subheader,#login{
+	float:left;
+	width:50%;
+}
+#calendar,#footer,#images{
+	float:left;
+	width:100%;
+}
+#header{
+	margin-top:0px;
+}
+#login{
+	text-align:right;
+}
+#images{
+    margin-left: -5px;
+    margin-top: 15px;
+    width:900px;
+}
+
+#images img{
+	width:100px;	
 }
