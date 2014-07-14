@@ -2,7 +2,7 @@ var T_PAIN = false;
 var T_PAIN_FRIENDS = false;
 var MY_ID = null;
 var ACCESS_TOKEN = null;
-
+var MOBILE = false;
 function statusChangeCallback(response) {
 	
 	if (response.status === 'connected') {
@@ -213,4 +213,10 @@ function renderCal(){
 $(document).ready(function(){
 	renderCal();
 	$(".fancybox").fancybox();
+	MOBILE = jQuery.browser.mobile;
+	console.info(MOBILE);
+	if(MOBILE){
+		$("#images").hide();
+		$("#main, body, html").css("width","500px");
+	}
 });
