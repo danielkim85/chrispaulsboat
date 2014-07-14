@@ -218,5 +218,6 @@ $(document).ready(function(){
 	if(MOBILE){
 		$("#images").hide();
 		$("#main, body, html").css("width","100%");
+		$("#main, body, html").css("height","600px");
 	}
 });
