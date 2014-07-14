@@ -217,6 +217,6 @@ $(document).ready(function(){
 	console.info(MOBILE);
 	if(MOBILE){
 		$("#images").hide();
-		$("#main, body, html").css("width","500px");
+		$("#main, body, html").css("width","100%");
 	}
 });
