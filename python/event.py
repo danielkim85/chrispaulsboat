@@ -32,11 +32,11 @@ elif action == 'cancel':
         cursor.execute("delete from events where date = %s", [my_date]);
 elif action == 'get':
     #anyone
-    cursor.execute("select * from events t1 join (select count(distinct user), date from rosters where active = 1 group by date) as t2 on t1.date = t2.date where t1.date >= %s and t1.date <= %s", [data['start'].value, data['end'].value]);
+    cursor.execute("select * from events t1 left join (select count(distinct user), date from rosters where active = 1 group by date) as t2 on t1.date = t2.date where t1.date >= %s and t1.date <= %s", [data['start'].value, data['end'].value]);
     rows = cursor.fetchall()
     print_ = "["
     for i in range(0,len(rows)):
-        print_ += "{\"title\": \"Sign up" + " (" + str(rows[i][3]) + ")\",\"start\":\"" + str(rows[i][1]).split(" ")[0] + "\"},"
+        print_ += "{\"title\": \"Sign up" + " (" + ('0' if rows[i][3] == None else str(rows[i][3])) + ")\",\"start\":\"" + str(rows[i][1]).split(" ")[0] + "\"},"
     if len(print_) > 1:
         print_ = print_[:len(print_)-1]
     print_ += "]"

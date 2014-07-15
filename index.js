@@ -175,11 +175,12 @@ function renderCal(){
 							$("#no_compete").show();						
 						}
 				    	for(var i = 0; i < json.length; i++){
+				    		//console.info(json[i].user);
 							FB.api(json[i].user,  function(response) {
 								$("#roster").append("<div style='margin-bottom:5px;'><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
-						    });
-				    		$("#dialog").unblock();
+						    });	
 				    	}
+				    	$("#dialog").unblock();
 				  	});			  		    	
 		  		});	  
 		  	}  
@@ -214,7 +215,6 @@ $(document).ready(function(){
 	renderCal();
 	$(".fancybox").fancybox();
 	MOBILE = jQuery.browser.mobile;
-	console.info(MOBILE);
 	if(MOBILE){
 		$("#images").hide();
 		$("#main, body, html").css("width","100%");

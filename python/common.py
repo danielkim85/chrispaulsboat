@@ -21,7 +21,8 @@ def am_i_t_pain(access_token):
     
 def am_i_friends_w_t_pain(access_token):
     graph = facebook.GraphAPI(access_token)
-
+    if am_i_t_pain(access_token):
+        return True;
     for t_pain in config.T_PAIN:
         if len(graph.get_object("me/friends/" + t_pain)['data']) > 0:
             return True;
