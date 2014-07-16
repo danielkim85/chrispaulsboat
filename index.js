@@ -212,12 +212,16 @@ function renderCal(){
     });    
 }
 $(document).ready(function(){
+	if(  !document.addEventListener  ){
+        alert("you can't ride the boat with IE 9");
+        location.href = "http://windows.microsoft.com/en-us/internet-explorer/download-ie";
+    }
 	renderCal();
 	$(".fancybox").fancybox();
 	MOBILE = jQuery.browser.mobile;
 	if(MOBILE){
 		$("#images").hide();
-		$("#main, body, html").css("width","100%");
+		$("#main, body, html").css("width","800px");
 		$("#main, body, html").css("height","600px");
 	}
 });
