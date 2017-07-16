@@ -3,6 +3,7 @@ var T_PAIN_FRIENDS = false;
 var MY_ID = null;
 var ACCESS_TOKEN = null;
 var MOBILE = false;
+
 function statusChangeCallback(response) {
 	
 	if (response.status === 'connected') {
@@ -17,7 +18,7 @@ function statusChangeCallback(response) {
 		// The person is not logged into Facebook, so we're not sure if
 		// they are logged into this app or not.
 		//document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
-    }
+ 	}
 }
 
 function checkLoginState() {
@@ -86,11 +87,98 @@ function loadInfo() {
 }
 
 function renderCal(){
-    $( "input[type=submit], button" )
-      .button()
-      .click(function( event ) {
-        event.preventDefault();
-      });
+  $('#calendar').fullCalendar({
+  	height: 400,
+    eventClick: function(event) {
+    	if(MY_ID == null){
+    		$( "#dialogMsg p" ).html('You must log in to join or view the roster!');
+    		$( "#dialogMsg" ).dialog();
+    	}
+			else{
+		    $("#roster").html("");
+	      $("#dialog" ).dialog({title : event.start.format()});
+	      $("#dialog").block({ message: null }); 
+
+				$.ajax({
+					type: "POST",
+			  		url: "./python/roster.py",
+			  		data: { action:"check", date: event.start.format(), access_token: ACCESS_TOKEN}
+				}).done(function( msg ) {
+			    	if(parseInt(msg) > 0){
+			    		$("#withdraw").show();
+			    		$("#join").hide();
+			    		
+			    	}
+			    	else{
+			    		$("#withdraw").hide();
+			    		$("#join").show();
+			    	}
+					$.ajax({
+						type: "POST",
+				  		url: "./python/roster.py",
+				  		data: { date: event.start.format(), action:"get"},
+				  		dataType:"json"
+					}).done(function( json ) {
+						if(json.length > 0){
+							$("#compete").show();
+							$("#no_compete").hide();
+						}
+						else{
+							$("#compete").hide();
+							$("#no_compete").show();						
+						}
+			    	for(var i = 0; i < json.length; i++){
+						FB.api(json[i].user,  function(response) {
+							$("#roster").append("<div style='margin-bottom:5px;'><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
+					    });	
+			    	}
+			    	$("#dialog").unblock();
+				  });			  		    	
+		  	});	  
+		  }  
+    },
+    dayClick: function(date, allDay, jsEvent, view) {
+    	console.info('day click');      
+    	if(T_PAIN){
+    		$( "#dialogConfirm p" ).html("Create an event on " + date.format() + "?");
+		    $( "#dialogConfirm" ).dialog({
+		      buttons: {
+		       	OK: function() {
+		       		var that = this;
+							$.ajax({
+								type: "POST",
+						  		url: "./python/event.py",
+						  		data: { date: date.format(), action:"create", access_token: ACCESS_TOKEN }
+							})
+					  	.done(function( msg ) {
+					  		$( that ).dialog( "close" );
+								$('#calendar').fullCalendar('refetchEvents');
+					  	});
+		        },
+		        Cancel: function() {
+		          $( this ).dialog( "close" );
+		        }
+		      }
+		    });
+    	}
+    },
+    loading: function(bool) {
+		  if (!bool) 
+		  	$(".fc-content").unblock();
+		  else
+		  	$(".fc-content").block({ message: null });
+		},
+		//get how many ppl joined in (5)
+		events: './python/event.py?action=get'
+  });
+}
+
+$(document).ready(function(){
+	$( "input[type=submit], button" )
+	.button()
+	.click(function( event ) {
+	  event.preventDefault();
+	});
 
 	$("#join").click(function(){
 		var date = $(".ui-dialog-title").html();
@@ -101,7 +189,9 @@ function renderCal(){
 		})
 	  	.done(function( msg ) {
 	  		$( "#dialog" ).dialog("close");
-	  		alert("You have joined!");
+				$( "#dialogMsg p" ).html('You have joined!');
+				$( "#dialogMsg" ).dialog();
+				$('#calendar').fullCalendar('refetchEvents');
 	  	});	
 	});
  
@@ -112,111 +202,49 @@ function renderCal(){
 	  		url: "./python/roster.py",
 	  		data: { date: date, access_token: ACCESS_TOKEN, action:"withdraw" }
 		})
-	  	.done(function( msg ) {
-	  		$( "#dialog" ).dialog("close");
-	  		alert("You have withdrawn!");
-	  	});	
+  	.done(function( msg ) {
+  		$( "#dialog" ).dialog("close");
+			$( "#dialogMsg p" ).html('You have withdrawn!');
+			$( "#dialogMsg" ).dialog();
+			$('#calendar').fullCalendar('refetchEvents');
+  	});	
 	});
- 
  
  	$("#cancel").click(function(){
+ 		$( "#dialog" ).dialog("close");
  		var date = $(".ui-dialog-title").html();
-    	if(T_PAIN){
-    		var r = confirm("Cancel " + date + "?");
-    		if(r){
-				$.ajax({
-					type: "POST",
-			  		url: "./python/event.py",
-			  		data: { date: date, action:"cancel", access_token: ACCESS_TOKEN }
-				})
-			  	.done(function( msg ) {
-			    	location.reload();
-			  	});	    			
-    		}
-    	}
-	});
-    
-    $('#calendar').fullCalendar({
-    	height: 400,
-	    eventClick: function(event) {
-	    	if(MY_ID == null){
-	    		alert("You must log in to join or view the roster!");
-	    	}
-				else{
-			    	$("#roster").html("");
-			        $("#dialog" ).dialog({title : event.start.format()});
-			        $("#dialog").block({ message: null }); 
-					$.ajax({
-						type: "POST",
-				  		url: "./python/roster.py",
-				  		data: { action:"check", date: event.start.format(), access_token: ACCESS_TOKEN}
-					}).done(function( msg ) {
-				    	if(parseInt(msg) > 0){
-				    		$("#withdraw").show();
-				    		$("#join").hide();
-				    		
-				    	}
-				    	else{
-				    		$("#withdraw").hide();
-				    		$("#join").show();
-				    	}
+  	if(T_PAIN){
+  		$( "#dialogConfirm p" ).html("Cancel " + date + "?");
+	    $( "#dialogConfirm" ).dialog({
+	      buttons: {
+	       	OK: function() {
+	       		var that = this;
 						$.ajax({
 							type: "POST",
-					  		url: "./python/roster.py",
-					  		data: { date: event.start.format(), action:"get"},
-					  		dataType:"json"
-						}).done(function( json ) {
-							if(json.length > 0){
-								$("#compete").show();
-								$("#no_compete").hide();
-							}
-							else{
-								$("#compete").hide();
-								$("#no_compete").show();						
-							}
-				    	for(var i = 0; i < json.length; i++){
-							FB.api(json[i].user,  function(response) {
-								$("#roster").append("<div style='margin-bottom:5px;'><a target='_blank' href='" + response.link + "'>" + response.name+ "</a></div>");
-						    });	
-				    	}
-				    	$("#dialog").unblock();
-					  });			  		    	
-			  	});	  
-			  }  
-	    },
-	    dayClick: function(date, allDay, jsEvent, view) {            
-	    	if(T_PAIN){
-	    		var r = confirm("Create an event on " + date.format() + "?");
-	    		if(r){
-					$.ajax({
-						type: "POST",
-				  		url: "./python/event.py",
-				  		data: { date: date.format(), action:"create", access_token: ACCESS_TOKEN }
-					})
+					  		url: "./python/event.py",
+					  		data: { date: date, action:"cancel", access_token: ACCESS_TOKEN }
+						})
 				  	.done(function( msg ) {
-				    	location.reload();
-				  	});	    			
-	    		}
-	    	}
-	    },
-	    loading: function(bool) {
-		  if (!bool) 
-		  	$(".fc-content").unblock();
-		  else
-		  	$(".fc-content").block({ message: null });
-		},
-		//get how many ppl joined in (5)
-		events: './python/event.py?action=get'
-
-    });    
-}
-$(document).ready(function(){
-	if(  !document.addEventListener  ){
-        alert("you can't ride the boat with IE 9");
-        location.href = "http://windows.microsoft.com/en-us/internet-explorer/download-ie";
+				  		$( that ).dialog( "close" );
+							$('#calendar').fullCalendar('refetchEvents');
+				  	});
+	        },
+	        Cancel: function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	    });
     }
+	});
+
+	if(  !document.addEventListener  ){
+		$( "#dialogMsg p" ).html('You can\'t ride the boat with IE 9.');
+		$( "#dialogMsg" ).dialog();
+ 	}
+
 	renderCal();
-	$(".fancybox").fancybox();
+
+	//mobile optimazation
 	MOBILE = jQuery.browser.mobile;
 	if(MOBILE){
 		$("#images").hide();

@@ -10,7 +10,6 @@ print_ = "{\"t_pain\":\"";
 print_ += "1" if common.am_i_t_pain(access_token) else "0";
 print_ += "\",\"friends\":\"";
 print_ += "1" if common.am_i_friends_w_t_pain(access_token) else "0";
-#print_ += "\",\"access_token\":\"" + access_token;
 print_ += "\"}";
 
 print print_

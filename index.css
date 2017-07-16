@@ -1,44 +1,42 @@
 body{
-	font-family:"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-size:14px;
+	font-weight: 300;
 	color:#666666;
 	margin-top:20px;
-	background-image:url('./img/stardust.png');
+	background-color:black;
 }
 #main{
 	margin:0 auto;
 	width:800px;
 }
-.fc-event{
+.fc-event, .fc-day{
 	cursor:pointer;
 }
 #roster{
 	margin:10px 0px;
 }
+.fc-event{
+	background-color:#0073E7;
+	border: 1px solid #0073E7;
+
+}
 .fc-event-inner{
 	text-align:center;
-}
-#status{
-	//float:right;
-	//margin-top:-5px;
 }
 .fc-content{
 	background-color:white;
 }
-
 h1, h2, h3, #status{
 	color:white;
+	font-weight:300;
 }
-
 h1{
 	margin-bottom:0px;
 }
 h3{
 	margin-top:0px;
 	margin-left:2px;
-}
-.fb_iframe_widget{
-	//margin-top:-65px;
 }
 #footer{
 	color:white;
@@ -52,12 +50,6 @@ h3{
 	display:none;
 	color:blue;
 }
-
-#polaroid{
-    //margin-left: -280px;
-    //margin-top: -321px;
-}
-
 #header,#subheader,#login{
 	float:left;
 	width:50%;
@@ -73,10 +65,10 @@ h3{
 	text-align:right;
 }
 #images{
-    float: left;
-    margin-left: -112px;
-    margin-top: -383px;
-    width: 114px;
+  float: left;
+  margin-left: -112px;
+  margin-top: -383px;
+  width: 114px;
 }
 #images img{
 	width:101px;
