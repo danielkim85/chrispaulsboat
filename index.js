@@ -60,6 +60,7 @@ function loadInfo() {
 		MY_ID = response.id;
   	if(window.location.href.startsWith('http://dev.')){
   		console.info('User\'s ID:' + MY_ID);
+  		console.info('ACCESS TOKEN:' + ACCESS_TOKEN);
   	}
   	document.getElementById('status').innerHTML =
 		'Hello, ' + response.name + '!';
