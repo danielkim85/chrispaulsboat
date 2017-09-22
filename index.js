@@ -21,15 +21,9 @@ function statusChangeCallback(response) {
  	}
 }
 
-function checkLoginState() {
-	FB.getLoginStatus(function(response) {
-  		statusChangeCallback(response);
-	});
-}
-
-var logout_event = function(response) {
+var logout_event = function() {
 	location.reload();
-}
+};
 
 window.fbAsyncInit = function() {
 	FB.init({
@@ -175,6 +169,14 @@ function renderCal(){
 }
 
 $(document).ready(function(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  if(dd === 21 && mm === 9){
+    console.info('happy birthday!');
+    $.fancybox.open($('#birthday'));
+  }
+
 	$( "input[type=submit], button" )
 	.button()
 	.click(function( event ) {
