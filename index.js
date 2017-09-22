@@ -133,7 +133,6 @@ function renderCal(){
 		  }  
     },
     dayClick: function(date, allDay, jsEvent, view) {
-    	console.info('day click');      
     	if(T_PAIN){
     		$( "#dialogConfirm p" ).html("Create an event on " + date.format() + "?");
 		    $( "#dialogConfirm" ).dialog({
@@ -173,7 +172,6 @@ $(document).ready(function(){
   var dd = today.getDate();
   var mm = today.getMonth()+1; //January is 0!
   if(dd === 22 && mm === 9){
-    console.info('happy birthday!');
     $.fancybox.open($('#birthday'));
   }
 
