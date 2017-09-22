@@ -172,7 +172,7 @@ $(document).ready(function(){
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth()+1; //January is 0!
-  if(dd === 21 && mm === 9){
+  if(dd === 22 && mm === 9){
     console.info('happy birthday!');
     $.fancybox.open($('#birthday'));
   }
