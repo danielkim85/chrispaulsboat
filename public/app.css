@@ -1,0 +1,36 @@
+@font-face {
+	font-family: '8bit';
+	src: url('/assets/fonts/visitor1.ttf');
+}
+
+body{
+	font-family:'8bit' !important;
+}
+
+body.day{
+	background-image: url('/assets/img/wallpaper_day.jpg');
+}
+
+body.night{
+	background-image: url('/assets/img/wallpaper_night.png');
+	color:#fff;
+}
+
+h1, h2, h3{
+	text-transform: uppercase;
+}
+
+.center{
+	text-align: center;
+}
+
+.vertical-center{
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+}

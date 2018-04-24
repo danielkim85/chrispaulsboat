@@ -1,0 +1,19 @@
+{
+  "name": "muboid",
+  "description": "",
+  "main": "",
+  "authors": [
+    "DK <danielkim@soulkast.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/danielkim85/chrispaulsobat",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
