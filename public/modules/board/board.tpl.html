@@ -1,0 +1,11 @@
+<div class="category"
+		 ng-repeat="category in categories">
+	<div class="category-name font-small">
+		{{category.name}}
+	</div>
+	<div class="question font-small"
+			 ng-repeat="question in questions"
+			 ng-click="chooseQuestion(category.name,question.amount);">
+			${{question.amount}}
+	</div>
+</div>

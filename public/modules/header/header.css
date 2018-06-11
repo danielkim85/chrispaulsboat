@@ -1,0 +1,10 @@
+header{
+	padding:2px;
+	text-align:center;
+}
+header #countdown{
+	display:inline-block;
+	position:relative;
+	width:285px;
+	vertical-align:super;
+}
