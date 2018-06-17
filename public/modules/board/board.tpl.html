@@ -1,11 +1,27 @@
-<div class="category"
-		 ng-repeat="category in categories">
-	<div class="category-name font-small">
-		{{category.name}}
+<div ng-show="!showQuestionBoard">
+	<div class="category"
+			 ng-repeat="category in categories">
+		<div class="category-name font-small">
+			{{category}}
+		</div>
+		<div class="uk-animation-toggle"
+				 ng-repeat="question in questions">
+			<div class="question font-small uk-animation-scale-up"
+					 ng-click="chooseQuestion(category,question.amount);">
+				${{question.amount}}
+			</div>
+		</div>
 	</div>
-	<div class="question font-small"
-			 ng-repeat="question in questions"
-			 ng-click="chooseQuestion(category.name,question.amount);">
-			${{question.amount}}
+</div>
+<div id="questionBoard"
+		 class="green-background white-foreground"
+		 ng-show="showQuestionBoard">
+	<div id="question">
+		{{question}}
+	</div>
+	<div class="answers blue-background"
+			 ng-click="chooseAnswer($index)"
+			 ng-repeat="answer in answers track by $index">
+		{{answer}}
 	</div>
 </div>

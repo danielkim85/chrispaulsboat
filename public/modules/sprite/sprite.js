@@ -5,8 +5,10 @@ angular.module('sprite', [])
         char:'@',
         size:'=',
         position:'=',
-        moving:'='
+        moving:'=',
+        msg:'='
       },
+      templateUrl: 'modules/sprite/sprite.tpl.html',
       link: function($scope, $element){
 
         //consts & maps
@@ -55,6 +57,23 @@ angular.module('sprite', [])
             $timeout.cancel(movingPromise);
           }
         });
+
+        $scope.$watch('msg',function(newValue,oldValue) {
+          if(!newValue || !newValue.color || !oldValue.color) {
+            return;
+          }
+
+          var bubble = angular.element($element[0].children[0]);
+
+          if(newValue.color !== oldValue.color){
+            bubble.removeClass(oldValue.color + '-background');
+            bubble.removeClass('speech-bubble-' + oldValue.color);
+          }
+
+          bubble.addClass(newValue.color + '-background');
+          bubble.addClass('speech-bubble-' + newValue.color);
+        });
+
 
         //helper functions
         function updateMovement(currentPos,spriteWidth){

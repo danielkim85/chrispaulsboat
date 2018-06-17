@@ -1,9 +1,7 @@
 board{
-	background-color:#000;
 	color:#FF9F1C;
 	padding:20px 0px 20px 10px;
 	width:100%;
-
 }
 
 board, board .category{
@@ -24,4 +22,17 @@ board .category-name{
 
 board .question{
 	cursor:pointer;
+}
+
+board #questionBoard{
+}
+
+board #question{
+	margin:20px;
+}
+
+board .answers{
+	cursor:pointer;
+	padding:20px;
+	margin:20px;
 }

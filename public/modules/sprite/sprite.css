@@ -40,3 +40,34 @@ sprite.small.down{
 sprite.small.right{
 	background-position-y:96px;
 }
+
+sprite .speech-bubble {
+	position: relative;
+	border-radius: .4em;
+	display:inline-block;
+	padding:12px;
+	margin-left:60px;
+	top:16px;
+}
+
+sprite .speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -7.5px;
+	margin-left: -15px;
+}
+
+sprite .speech-bubble.speech-bubble-blue:after{
+	border-right-color: #011627;
+}
+
+sprite .speech-bubble.speech-bubble-red:after{
+	border-right-color: #E71D36;
+}

@@ -26,17 +26,15 @@
 				<span class="green-foreground">JEOPARDY!</span> of Chris Paul
 			</h1>
 			<div>
-				<board></board>
+				<board class="green-background"></board>
 			</div>
 			<div id="interface">
 				<sprite id="host"
 				        position="2"
 				        size="1"
 				        char="king"
-				        moving="false"></sprite>
-				<div class="speech-bubble blue-background white-foreground font-small">
-					Welcome!
-				</div>
+				        moving="host.moving"
+								msg="host.msg"></sprite>
 			</div>
 		</div>
 
@@ -55,6 +53,9 @@
 		<!-- UIkit JS -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit-icons.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
+
 		<script src="assets/js/countdown.min.js"></script>
 
 		<script src="const.js"></script>
