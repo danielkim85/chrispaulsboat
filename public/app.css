@@ -16,6 +16,12 @@ h1{
 	margin-bottom:15px;
 }
 
+#gSignin{
+	display:inline-block;
+	top: 4px;
+	position: relative;
+}
+
 .blue-background{
 	background-color:#011627;
 }

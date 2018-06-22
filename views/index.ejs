@@ -14,10 +14,18 @@
 		<link rel='stylesheet' href='modules/board/board.css' />
 		<link rel='stylesheet' href='app.css' />
 
+		<!-- google login -->
+		<meta name="google-signin-scope" content="profile email">
+		<meta name="google-signin-client_id" content="519191212714-1qav99v7gaaj78ab1j2khllbqbst0suq.apps.googleusercontent.com">
+
 	</head>
 	<body class="white-background"
 	      ng-app="BoatApp"
 	      ng-controller="BoatCtrl">
+
+		<!-- fb login -->
+		<script src="modules/login/facebook.js"></script>
+		<script src="modules/login/google.js"></script>
 
 		<header class="red-background"></header>
 
@@ -36,6 +44,21 @@
 				        moving="host.moving"
 								msg="host.msg"></sprite>
 			</div>
+
+			<div class="fb-login-button"
+			     data-max-rows="1"
+			     data-size="large"
+			     data-button-type="login_with"
+			     data-show-faces="false"
+			     data-auto-logout-link="true"
+			     data-use-continue-as="false"
+			     data-onlogin="checkLoginState();"></div>
+
+			<div id="gSignin"></div>
+
+			<div id="status">
+			</div>
+
 		</div>
 
 		<div id="footer">
@@ -54,7 +77,10 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit-icons.min.js"></script>
 
+		<!-- socket -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
+
+		<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
 		<script src="assets/js/countdown.min.js"></script>
 

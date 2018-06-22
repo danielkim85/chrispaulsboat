@@ -1,5 +1,5 @@
 var app = angular.module('BoatApp', ['header','board','sprite']);
-app.controller('BoatCtrl', function ($scope,$rootScope) {
+app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   //socket
   var protocol = "http://";
@@ -21,5 +21,17 @@ app.controller('BoatCtrl', function ($scope,$rootScope) {
 
   $rootScope.socket.on('disconnect', function(){
   });
+
+  //watch for login data
+  $scope.$watch(
+    function () {
+      return $window.user
+    }, function(n,o){
+      if(n){
+        console.info(n);
+      }
+    }
+  );
+
 
 });
