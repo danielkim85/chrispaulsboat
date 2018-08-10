@@ -7,6 +7,10 @@
 }(document, 'script', 'facebook-jssdk'));
 
 function checkLoginState() {
+  if(window.user && window.user.type !== 'anon'){
+    return;
+  }
+
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       FB.api('/me?fields=name,id,picture,email', function(response) {
@@ -15,7 +19,7 @@ function checkLoginState() {
           email:response.email,
           name:response.name,
           picture:response.picture.data.url
-        }
+        };
       });
     }
   });

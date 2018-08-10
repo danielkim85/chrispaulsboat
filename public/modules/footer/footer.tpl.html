@@ -1,0 +1,16 @@
+<button class="uk-button uk-button-primary uk-button-small left"
+				ng-click="getLeaderboard();">
+	Leaderboard
+</button>
+
+<button class="uk-button uk-button-primary uk-button-small"
+				ng-click="logout();"
+				ng-show="$root.isLoggedIn">
+	Logout
+</button>
+
+<button class="uk-button uk-button-primary uk-button-small"
+				ng-click="login();"
+				ng-show="!$root.isLoggedIn">
+	Login
+</button>

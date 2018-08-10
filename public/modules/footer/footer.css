@@ -1,0 +1,16 @@
+footer{
+	width:100%;
+	padding:10px 0px;
+	text-align:right;
+	position:fixed;
+	bottom:0px;
+}
+
+footer button{
+	margin-right:10px !important;
+}
+
+footer button.left{
+	float:left;
+	margin-left:10px;
+}

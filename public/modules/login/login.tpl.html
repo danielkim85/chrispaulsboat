@@ -1,0 +1,82 @@
+<div id="modalLogin" uk-modal>
+	<div class="uk-modal-dialog uk-modal-body">
+		<div ng-hide="user.type">
+			<div ng-show="shouldHideAnonLogin();">
+				You are playing anonymously.<br />
+				Feel free to login anytime.<br />
+				Your current score will carry over.
+			</div>
+
+			<div class="login-button">
+				<div class="fb-login-button"
+						 data-max-rows="1"
+						 data-size="large"
+						 data-button-type="login_with"
+						 data-show-faces="false"
+						 data-auto-logout-link="true"
+						 data-use-continue-as="false"
+						 data-onlogin="checkLoginState();"></div>
+			</div>
+
+			<div class="login-button">
+				<div id="gSignin"></div>
+			</div>
+
+			<div class="login-button" ng-hide="shouldHideAnonLogin();">
+				<button class="uk-button uk-button-primary"
+								ng-click="user.type = 'anon';">
+					Play Anonymously
+				</button>
+			</div>
+		</div>
+
+		<form ng-show="user.type">
+			<fieldset class="uk-fieldset">
+				<div class="uk-margin" ng-show="errorMsg">
+					<input class="uk-input uk-form-danger"
+								 type="text"
+								 value="{{errorMsg}}">
+				</div>
+
+				<div class="uk-margin" ng-hide="user.type !== 'anon'">
+					<input class="uk-input"
+								 type="text"
+								 ng-model="charName"
+								 placeholder="Name">
+				</div>
+
+				<div class="uk-margin">
+					<div>
+						Pick your character
+					</div>
+					<div id="char1"
+							 class="uk-card uk-card-default char"
+							 ng-click="pickChar('char1','aristocrate-m-002-light');">
+						<sprite position="2"
+										size="1"
+										char="aristocrate-m-002-light"
+										moving="char1.moving"></sprite>
+					</div>
+					<div id="char2"
+							 class="uk-card uk-card-default char"
+							 ng-click="pickChar('char2','aristocrate-f-003-light')">
+						<sprite position="2"
+										size="1"
+										char="aristocrate-f-003-light"
+										moving="char2.moving"></sprite>
+					</div>
+				</div>
+				<div class="uk-margin">
+					<button class="uk-button uk-button-primary"
+									ng-click="start();">
+						Start game!
+					</button>
+				</div>
+			</fieldset>
+		</form>
+
+		<button class="uk-modal-close-outside" type="button" uk-close
+						ng-click="closeLoginModal();"></button>
+	</div>
+
+</div>

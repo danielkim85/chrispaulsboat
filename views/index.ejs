@@ -12,6 +12,9 @@
 		<link rel='stylesheet' href='modules/sprite/sprite.css' />
 		<link rel='stylesheet' href='modules/header/header.css' />
 		<link rel='stylesheet' href='modules/board/board.css' />
+		<link rel='stylesheet' href='modules/leaderboard/leaderboard.css' />
+		<link rel='stylesheet' href='modules/login/login.css' />
+		<link rel='stylesheet' href='modules/footer/footer.css' />
 		<link rel='stylesheet' href='app.css' />
 
 		<!-- google login -->
@@ -23,10 +26,6 @@
 	      ng-app="BoatApp"
 	      ng-controller="BoatCtrl">
 
-		<!-- fb login -->
-		<script src="modules/login/facebook.js"></script>
-		<script src="modules/login/google.js"></script>
-
 		<header class="red-background"></header>
 
 		<div id="container">
@@ -37,38 +36,35 @@
 				<board class="green-background"></board>
 			</div>
 			<div id="interface">
+
 				<sprite id="host"
 				        position="2"
 				        size="1"
 				        char="king"
 				        moving="host.moving"
 								msg="host.msg"></sprite>
+
+				<sprite ng-show="player.sprite"
+								id="player"
+				        position="2"
+				        size="1"
+				        moving="player.moving"
+				        char="{{player.sprite}}"
+								msg="player.msg"></sprite>
+
 			</div>
-
-			<div class="fb-login-button"
-			     data-max-rows="1"
-			     data-size="large"
-			     data-button-type="login_with"
-			     data-show-faces="false"
-			     data-auto-logout-link="true"
-			     data-use-continue-as="false"
-			     data-onlogin="checkLoginState();"></div>
-
-			<div id="gSignin"></div>
-
-			<div id="status">
-			</div>
-
+			<login></login>
+			<leaderboard></leaderboard>
 		</div>
 
-		<div id="footer">
-
-		</div>
+		<footer class="blue-background"></footer>
 
 		<!-- jQuery -->
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js"
 		        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 		        crossorigin="anonymous"></script>
+
+		<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
 		<!-- angular JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -80,14 +76,15 @@
 		<!-- socket -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
 
-		<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-
 		<script src="assets/js/countdown.min.js"></script>
 
 		<script src="const.js"></script>
 		<script src="modules/sprite/sprite.js"></script>
 		<script src="modules/header/header.js"></script>
 		<script src="modules/board/board.js"></script>
+		<script src="modules/leaderboard/leaderboard.js"></script>
+		<script src="modules/login/login.js"></script>
+		<script src="modules/footer/footer.js"></script>
 		<script src="app.js"></script>
 	</body>
 </html>

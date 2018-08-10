@@ -16,12 +16,6 @@ h1{
 	margin-bottom:15px;
 }
 
-#gSignin{
-	display:inline-block;
-	top: 4px;
-	position: relative;
-}
-
 .blue-background{
 	background-color:#011627;
 }
@@ -73,4 +67,8 @@ h1{
 
 #interface{;
 	text-align:left;
+}
+
+#player{
+	float:right;
 }

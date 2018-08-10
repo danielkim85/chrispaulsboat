@@ -16,18 +16,21 @@ app.controller('AdminCtrl', function ($scope) {
   };
 
   $scope.uploadQuestion = function(){
-    var question = {
-      question: '1 + 2 = ?',
-      answers: ['0','10','3','4'],
-      correct: 2
-    };
-    question = JSON.stringify(question);
-    $scope.socket.emit('uploadQuestion', 'cpb', 'boat', 200, question);
-  };
+    var categories = [1,2,3,4,5,6];
+    var amounts = [200,400,600,800,1000];
+    var question = '1 + 2 = ?';
+    categories.forEach(function(category){
+      amounts.forEach(function(amount){
+        $scope.socket.emit('uploadQuestion', question, amount,category);
+      });
+    });
 
-  $scope.test = function(){
-    $scope.socket.emit('getQuestion', 'cpb', 'boat',200);
-    $scope.socket.emit('checkAnswer', 'cpb', 'boat',200, 2);
+    for(var i = 1; i <= 30; i++){
+      for(var j = 0; j < 4; j++){
+        var correct = j === 2 ? 1 : 0;
+        $scope.socket.emit('uploadAnswer', j, correct,i);
+      }
+    }
   };
 
 

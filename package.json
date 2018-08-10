@@ -14,7 +14,7 @@
     "express": "~4.15.2",
     "lodash": "^4.17.4",
     "morgan": "~1.8.1",
-    "redis": "^2.8.0",
+    "mysql": "^2.15.0",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {

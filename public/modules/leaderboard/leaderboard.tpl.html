@@ -1,0 +1,27 @@
+<div id="modalLeaderboard" uk-modal>
+	<div class="uk-modal-dialog uk-modal-body">
+		<div class="blue-foreground"
+				 style="margin-bottom:20px;">
+			Thank you for playing !
+		</div>
+
+		<div>
+			Leaderboard
+		</div>
+
+		<ol>
+			<li ng-repeat="winner in winners">
+				<div class="amount red-foreground">
+					{{winner.amount}}
+				</div>
+				<div class="name">
+					{{winner.name}}
+				</div>
+			</li>
+		</ol>
+
+		<div>
+			<button class="uk-button uk-button-primary">Play again</button>
+		</div>
+	</div>
+</div>

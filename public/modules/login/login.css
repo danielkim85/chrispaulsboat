@@ -1,0 +1,20 @@
+#modalLogin{
+	text-align:center;
+}
+
+#gSignin{
+	display:inline-block;
+	top: 4px;
+	position: relative;
+}
+
+.login-button{
+	margin:10px 0px;
+}
+
+.char{
+	display:inline-table;
+	width:49%;
+	cursor:pointer;
+	padding:20px 0px;
+}

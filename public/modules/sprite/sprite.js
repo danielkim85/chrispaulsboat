@@ -17,11 +17,6 @@ angular.module('sprite', [])
         var SIZE_MAP = ['small','large'];
 
         //input sanity check
-        if(!$scope.char){
-          console.error('Invalid sprite char!');
-          return;
-        }
-
         if($scope.size < 0 || $scope.size > 1){
           console.error('Invalid sprite size!');
           return;
@@ -34,9 +29,7 @@ angular.module('sprite', [])
 
         //initialization
         var size = $scope.size ? SIZE_MAP[$scope.size] : SIZE_MAP[0];
-        var char = $scope.char;
         var element = angular.element($element[0]);
-        element.css('background-image','url(' + PREFIX + char + '-' + size + '.png)');
         element.addClass(size);
 
         //watch
@@ -44,6 +37,13 @@ angular.module('sprite', [])
           var position = $scope.position ? POSITION_MAP[$scope.position] : POSITION_MAP[0];
           element.addClass(position);
         });
+
+        $scope.$watch('char',function(n){
+          if(n){
+            var char = $scope.char;
+            element.css('background-image','url(' + PREFIX + char + '-' + size + '.png)');
+          }
+        },true);
 
         var movingPromise;
         $scope.$watch('moving',function(newValue){
@@ -59,19 +59,22 @@ angular.module('sprite', [])
         });
 
         $scope.$watch('msg',function(newValue,oldValue) {
-          if(!newValue || !newValue.color || !oldValue.color) {
+          if(!newValue || !newValue.color || (oldValue && !oldValue.color)) {
             return;
           }
-
           var bubble = angular.element($element[0].children[0]);
 
-          if(newValue.color !== oldValue.color){
+          if(oldValue && newValue.color !== oldValue.color){
             bubble.removeClass(oldValue.color + '-background');
             bubble.removeClass('speech-bubble-' + oldValue.color);
           }
 
           bubble.addClass(newValue.color + '-background');
           bubble.addClass('speech-bubble-' + newValue.color);
+
+          if(newValue.direction){
+            $scope.bDirection = '-' + newValue.direction;
+          }
         });
 
 

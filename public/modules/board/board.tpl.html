@@ -1,13 +1,16 @@
 <div ng-show="!showQuestionBoard">
 	<div class="category"
+			 categoryId="{{category.id}}"
 			 ng-repeat="category in categories">
-		<div class="category-name font-small">
-			{{category}}
+		<div class="category-name font-small blue-background">
+			{{category.name}}
 		</div>
-		<div class="uk-animation-toggle"
+		<div class="question-container uk-animation-toggle"
+				 category="{{category.name}}"
+				 amount="{{question.amount}}"
 				 ng-repeat="question in questions">
-			<div class="question font-small uk-animation-scale-up"
-					 ng-click="chooseQuestion(category,question.amount);">
+			<div class="question font-small uk-animation-scale-down blue-background"
+					 ng-click="chooseQuestion(category.id,question.amount);">
 				${{question.amount}}
 			</div>
 		</div>
@@ -20,8 +23,8 @@
 		{{question}}
 	</div>
 	<div class="answers blue-background"
-			 ng-click="chooseAnswer($index)"
+			 ng-click="chooseAnswer(answer.answerID)"
 			 ng-repeat="answer in answers track by $index">
-		{{answer}}
+		{{answer.answer}}
 	</div>
 </div>

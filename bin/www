@@ -30,11 +30,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-var redis = require('redis');
-var client = redis.createClient(); // this creates a new client
-client.on('connect', function() {
-  console.log('Redis client connected');
-});
+
 /**
  * Normalize a port into a number, string, or false.
  */
