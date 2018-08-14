@@ -66,9 +66,21 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     $scope.player.msg = {txt:'$' + amount,color:'blue',direction:'left'};
   });
 
+  var skipOpeningSound = false;
   $scope.$root.socket.on('returnCompletion', function(resp){
     console.info(resp);
-    //$scope.$root.showLeaderboard = true;
+
+    //soundboard
+    if(!skipOpeningSound) {
+      var audio = new Audio('assets/audio/opening.mp3');
+      audio.play();
+      skipOpeningSound = true;
+    }
+
+    if(resp.count === resp.max){
+      $scope.$root.socket.emit('getLeaderboard');
+      $scope.$root.showLeaderboard = true;
+    }
   });
 
   //watch for login data
@@ -77,10 +89,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
       return $window.user
     }, function(n,o){
       if(n){
-        if(n.type !== 'anon') {
-          $rootScope.isLoggedIn = true;
-          $scope.$root.socket.emit('getPlayer', n.email);
-        }
+        $rootScope.isLoggedIn = true;
+        $scope.$root.socket.emit('getPlayer', n.email);
+
         if(n.charSprite){
           $scope.player = {};
           $scope.player.sprite = n.charSprite;

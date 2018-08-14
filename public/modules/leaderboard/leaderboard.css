@@ -1,4 +1,9 @@
 #modalLeaderboard .amount{
 	float:left;
 	width:120px;
+	margin-left:20px;
+}
+
+#modalLeaderboard .winner{
+	margin-bottom:10px;
 }

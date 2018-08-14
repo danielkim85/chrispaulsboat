@@ -5,12 +5,12 @@
 			Thank you for playing !
 		</div>
 
-		<div>
+		<div class="green-foreground">
 			Leaderboard
 		</div>
 
 		<ol>
-			<li ng-repeat="winner in winners">
+			<li ng-repeat="winner in winners" class="winner">
 				<div class="amount red-foreground">
 					{{winner.amount}}
 				</div>
@@ -21,7 +21,7 @@
 		</ol>
 
 		<div>
-			<button class="uk-button uk-button-primary">Play again</button>
+			<button class="uk-button uk-button-primary" ng-click="createNewGame();">Play again</button>
 		</div>
 	</div>
 </div>

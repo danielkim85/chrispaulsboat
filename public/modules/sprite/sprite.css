@@ -51,7 +51,9 @@ sprite .speech-bubble, sprite .speech-bubble-left{
 }
 
 sprite .speech-bubble-left{
-	margin-left:-100px;
+	margin-left:-115px;
+	min-width:78px;
+	text-align: right;
 }
 
 sprite .speech-bubble:after {

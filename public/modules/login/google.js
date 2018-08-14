@@ -3,7 +3,7 @@ function onFailure(error) {
 }
 
 function onSuccess(googleUser) {
-  if(window.user && window.user.type !== 'anon'){
+  if(window.user){
     return;
   }
   var profile = googleUser.getBasicProfile();

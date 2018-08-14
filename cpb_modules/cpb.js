@@ -19,11 +19,11 @@ function shuffle(a) {
 function getScore(connection, socket, sessionID, callback){
   connection.query(
     'select sessionID, SUM(amount) as amount from \n' +
-    '(select * from interactions order by timestamp asc LIMIT 30) i \n' +
+    '(select * from interactions where sessionID = ? order by timestamp asc LIMIT 30) i \n' +
     'join questions q on i.questionID = q.id \n' +
     'join answers a on i.answerID = a.id AND a.correct = 1 \n' +
     'where sessionID = ?',
-    [sessionID],
+    [sessionID, sessionID],
     function (error, results) {
       if (error) return;
       if(results.length > 0){
@@ -83,7 +83,7 @@ function insertLeaderboard(connection,socket,sessionID,amount){
     [sessionID,amount],
     function (error) {
       if (error) return;
-      getLeaderboard();
+      getLeaderboard(connection,socket);
     });
 }
 
@@ -98,7 +98,7 @@ function markCompleted(connection,socket,sessionID){
     });
 }
 
-function checkCompletion(connection, socket, sessionID){
+function checkCompletion(connection, socket, sessionID, callback){
   connection.query(
     'select count(i.id) as count, active from interactions i \n' +
     'join sessions s on i.sessionID = s.id \n' +
@@ -108,20 +108,24 @@ function checkCompletion(connection, socket, sessionID){
     function (error, results) {
       if (error) return;
       if(results.length > 0){
-        socket.emit('returnCompletion', {
-          count : results[0].count,
-          max : MAX_INTERACTIONS
-        });
-
-        if(results[0].active && results[0].count === MAX_INTERACTIONS){
-          markCompleted(connection,socket,sessionID);
+        if(!callback){
+          socket.emit('returnCompletion', {
+            count : results[0].count,
+            max : MAX_INTERACTIONS
+          });
         }
 
+        if(results[0].active && results[0].count === MAX_INTERACTIONS && !callback){
+            markCompleted(connection, socket, sessionID);
+        }
+        else if(results[0].count === MAX_INTERACTIONS && callback){
+          callback();
+        }
       }
     });
 }
 
-function insertInteraction(connection, socket, email, questionID, answerID){
+function insertInteraction(connection, socket, email, questionID, answerID, results){
   if(!userMap[email] || userMap[email].socketID !== socket.id){
     return;
   }
@@ -134,14 +138,14 @@ function insertInteraction(connection, socket, email, questionID, answerID){
   connection.query(
     'INSERT INTO interactions(playerID,sessionID,questionID,answerID) values(?,?,?,?)',
     [playerID,sessionID,questionID,answerID],
-    function (error, results) {
+    function (error) {
       if (error) return;
       socket.emit('returnAnswer',results.length > 0);
       checkCompletion(connection,socket,sessionID);
     });
 }
 
-function getPlayer(connection, socket, email){
+function getPlayer(connection, socket, email, forceNewSession){
   connection.query(
     'SELECT p.id as playerID, sprite, s.id as sessionID from players p \n' +
     'left join sessions s on p.id = s.playerID \n' +
@@ -150,8 +154,8 @@ function getPlayer(connection, socket, email){
     function (error, results) {
       if (error) return;
       if(results.length > 0){
-        var playerID = results[0].playerID;
 
+        var playerID = results[0].playerID;
         userMap[email] = {
           socketID : socket.id,
           playerID : playerID
@@ -159,6 +163,11 @@ function getPlayer(connection, socket, email){
 
         if(!results[0].sessionID){
           insertSession(connection,socket,playerID,email);
+        }
+        else if(forceNewSession && results[0].sessionID){
+          checkCompletion(connection,socket,results[0].sessionID,function(){
+            insertSession(connection,socket,playerID,email);
+          });
         }
         else{
           getSession(connection,socket,playerID,email);
@@ -178,23 +187,33 @@ function cpb(server){
 
   io.on('connection', function(socket){
 
-    //TODO also need to return interaction history to fill the boards
     socket.on('getPlayer', function(email){
+      if(!email){
+        return;
+      }
       getPlayer(connection,socket,email);
     });
 
-    socket.on('insertPlayer', function(gameID, name, sprite, email){
-      if(email){
-        connection.query(
-          'INSERT INTO players(email,name,sprite,gameID) values(?,?,?,?)',
-          [email,name,sprite,gameID],
-          function (error) {
-            if (error) return;
-            getPlayer(connection,socket,email);
-          });
-      }else{
-        //anon user cannot be loaded;
+    socket.on('createNewGame', function(gameID, email){
+      if(!email){
+        return;
       }
+
+      getPlayer(connection,socket,email,true);
+    });
+
+    socket.on('insertPlayer', function(gameID, name, sprite, email){
+      if(!email){
+        return;
+      }
+
+      connection.query(
+        'INSERT INTO players(email,name,sprite,gameID) values(?,?,?,?)',
+        [email,name,sprite,gameID],
+        function (error) {
+          if (error) return;
+          getPlayer(connection,socket,email);
+        });
     });
 
     socket.on('getProgress', function(sessionID){
@@ -211,6 +230,7 @@ function cpb(server){
     });
 
     socket.on('getCategories', function(gameID){
+
       connection.query(
         'SELECT id, name from categories where gameID = ?',
         [gameID],

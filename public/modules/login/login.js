@@ -23,7 +23,6 @@ angular.module('login', [])
               window.user.charSprite = $scope.charSprite;
               $scope.user = undefined;
               $rootScope.showLogin = false;
-              console.info(window.user);
             }
             else {
               $scope.user = {};
@@ -38,10 +37,6 @@ angular.module('login', [])
 
         $scope.closeLoginModal = function(){
           $rootScope.showLogin = false;
-        };
-
-        $scope.shouldHideAnonLogin = function(){
-          return (window.user && window.user.type === 'anon');
         };
 
         $scope.pickChar = function(charId, charSprite){
@@ -66,13 +61,12 @@ angular.module('login', [])
 
           window.user = {
             type:$scope.user.type,
-            email:$scope.user.type === 'anon' ? '' : window.user.email,
+            email:window.user.email,
             name:$scope.charName,
-            picture:$scope.user.type === 'anon' ? '' : window.user.picture,
+            picture:window.user.picture,
             charSprite:$scope.charSprite
           };
 
-          console.info(window.user);
           $scope.user = undefined;
           $rootScope.showLogin = false;
         };

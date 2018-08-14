@@ -5,11 +5,16 @@ angular.module('leaderboard', [])
       },
       templateUrl: 'modules/leaderboard/leaderboard.tpl.html',
       link: function($scope){
-        console.info('leaderboard loading ...');
+
         var modal = UIkit.modal("#modalLeaderboard");
 
         $scope.$root.$watch('showLeaderboard',function(n){
           if(n){
+
+            //soundboard
+            var audio = new Audio('assets/audio/clear.mp3');
+            audio.play();
+
             modal.show();
           }
           else{
@@ -18,10 +23,13 @@ angular.module('leaderboard', [])
         });
 
         $scope.$root.socket.on('returnLeaderboard', function(resp){
-          console.info(resp);
           $scope.$root.showLeaderboard = true;
           $scope.winners = resp;
         });
+
+        $scope.createNewGame = function(){
+          $scope.$root.socket.emit('createNewGame',1,window.user.email);
+        };
 
       }
     };

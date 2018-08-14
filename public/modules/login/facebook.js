@@ -7,7 +7,7 @@
 }(document, 'script', 'facebook-jssdk'));
 
 function checkLoginState() {
-  if(window.user && window.user.type !== 'anon'){
+  if(window.user){
     return;
   }
 

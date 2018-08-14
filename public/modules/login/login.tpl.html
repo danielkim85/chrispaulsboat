@@ -1,12 +1,10 @@
-<div id="modalLogin" uk-modal>
+<div id="modalLogin"
+		 esc-close="false"
+		 bg-close="false"
+		 uk-modal>
 	<div class="uk-modal-dialog uk-modal-body">
-		<div ng-hide="user.type">
-			<div ng-show="shouldHideAnonLogin();">
-				You are playing anonymously.<br />
-				Feel free to login anytime.<br />
-				Your current score will carry over.
-			</div>
 
+		<div ng-hide="user.type">
 			<div class="login-button">
 				<div class="fb-login-button"
 						 data-max-rows="1"
@@ -21,13 +19,6 @@
 			<div class="login-button">
 				<div id="gSignin"></div>
 			</div>
-
-			<div class="login-button" ng-hide="shouldHideAnonLogin();">
-				<button class="uk-button uk-button-primary"
-								ng-click="user.type = 'anon';">
-					Play Anonymously
-				</button>
-			</div>
 		</div>
 
 		<form ng-show="user.type">
@@ -36,13 +27,6 @@
 					<input class="uk-input uk-form-danger"
 								 type="text"
 								 value="{{errorMsg}}">
-				</div>
-
-				<div class="uk-margin" ng-hide="user.type !== 'anon'">
-					<input class="uk-input"
-								 type="text"
-								 ng-model="charName"
-								 placeholder="Name">
 				</div>
 
 				<div class="uk-margin">

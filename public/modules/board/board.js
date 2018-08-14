@@ -5,6 +5,8 @@ angular.module('board', [])
       },
       templateUrl: 'modules/board/board.tpl.html',
       link: function($scope){
+        $('board').block({ message: 'Loading ...' });
+
         var progress_ = {};
 
         function updateBoard(categoryID, amount, correct){
@@ -15,15 +17,17 @@ angular.module('board', [])
 
           if(correct){
             obj.addClass('blue-foreground');
-            obj.html('correct');
+            obj.html('CORRECT');
           }
           else{
             obj.addClass('red-foreground');
-            obj.html('incorrect');
+            obj.html('WRONG');
           }
         }
 
         $scope.$root.$watch('socket',function(newValue){
+          console.info('socket ready');
+          console.info($scope.$root.socket);
           if(!newValue){
             return;
           }
@@ -31,6 +35,8 @@ angular.module('board', [])
           $scope.$root.socket.emit('getCategories', 1);
 
           $scope.$root.socket.on('returnCategories', function(resp){
+            console.info('categories returned');
+            console.info(resp);
             $scope.categories = resp;
           });
 
@@ -38,27 +44,41 @@ angular.module('board', [])
             if(resp === null){
               //error
               console.error('Querstion not found!');
-              return;
             }
             else {
               $scope.question = resp[0].question;
               questionID = resp[0].questionID;
-              $scope.answers = resp
+              $scope.answers = resp;
+
+              //soundboard
+              var audio = new Audio('assets/audio/board_fill.mp3');
+              audio.play();
             }
           });
 
           $scope.$root.socket.on('returnAnswer', function(resp){
+            if(!progress_[category_]){
+              progress_[category_] = {};
+            }
             progress_[category_][amount_] = { correct : resp };
             $scope.$parent.host.moving = true;
             $timeout(function(){
               $scope.$parent.host.moving = false;
             },3000);
 
+            //if correct
+            var audio;
             if(resp){
               $scope.$parent.host.msg = {txt:'Correct!',color:'blue'};
+              //soundboard
+              audio = new Audio('assets/audio/correct.mp3');
+              audio.play();
             }
             else{
               $scope.$parent.host.msg = {txt:'Incorrect!',color:'red'};
+              //soundboard
+              audio = new Audio('assets/audio/wrong.mp3');
+              audio.play();
             }
 
             $scope.$root.socket.emit('getScore',$scope.$root.sessionID);
@@ -91,7 +111,6 @@ angular.module('board', [])
 
         $scope.$root.$watch('sessionID',function(n){
           if(n){
-            $('board').block({ message: 'Loading ...' });
             $scope.$root.socket.emit('getProgress', n);
           }
         });
