@@ -1,5 +1,5 @@
 angular.module('login', [])
-  .directive('login', function($rootScope){
+  .directive('login', function(){
     return{
       scope:{
       },
@@ -8,7 +8,7 @@ angular.module('login', [])
 
         var modal = UIkit.modal("#modalLogin");
 
-        $rootScope.$watch('showLogin',function(n){
+        $scope.$root.$watch('showLogin',function(n){
           if(n){
             modal.show();
           }
@@ -17,12 +17,12 @@ angular.module('login', [])
           }
         });
 
-        $rootScope.$watch('isLoggedIn',function(n){
+        $scope.$root.$watch('isLoggedIn',function(n){
           if(n){
             if($scope.charSprite){
               window.user.charSprite = $scope.charSprite;
               $scope.user = undefined;
-              $rootScope.showLogin = false;
+              $scope.$root.showLogin = false;
             }
             else {
               $scope.user = {};
@@ -36,7 +36,7 @@ angular.module('login', [])
         });
 
         $scope.closeLoginModal = function(){
-          $rootScope.showLogin = false;
+          $scope.$root.showLogin = false;
         };
 
         $scope.pickChar = function(charId, charSprite){
@@ -68,7 +68,8 @@ angular.module('login', [])
           };
 
           $scope.user = undefined;
-          $rootScope.showLogin = false;
+          $scope.$root.showLogin = false;
+
         };
 
         $scope.char1 = {};

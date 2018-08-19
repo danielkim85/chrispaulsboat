@@ -19,8 +19,8 @@
 <div id="questionBoard"
 		 class="green-background white-foreground"
 		 ng-show="showQuestionBoard">
-	<div id="question">
-		{{question}}
+	<div id="question" ng-bind-html="question">
+
 	</div>
 	<div class="answers blue-background"
 			 ng-click="chooseAnswer(answer.answerID)"

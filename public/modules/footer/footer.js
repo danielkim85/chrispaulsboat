@@ -21,11 +21,13 @@ angular.module('footer', [])
             auth2.signOut().then(function () {
               window.user = false;
               auth2.disconnect();
+              window.location = '/';
             });
           }
           else if(user === 'facebook'){
-            FB.logout(function(response) {
+            FB.logout(function() {
               window.user = false;
+              window.location = '/';
             });
           }
         }

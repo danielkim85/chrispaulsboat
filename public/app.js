@@ -21,7 +21,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
       }
       return script;
     }
-  };
+  }
 
   //socket
   var protocol = "http://";
@@ -52,6 +52,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
   $scope.$root.socket.on('returnUser', function(resp){
     $scope.player = {};
     $scope.player.sprite = resp.sprite;
+    $window.user.charSprite = resp.sprite;
     $scope.$root.showLogin = false;
   });
 
@@ -98,6 +99,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
           //get user data from io
           $scope.$root.socket.emit('insertPlayer', 1, n.name, n.charSprite, n.email);
+        }
+        else{
+          $scope.$root.showLogin = true;
         }
       }
       else{

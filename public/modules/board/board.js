@@ -1,5 +1,5 @@
 angular.module('board', [])
-  .directive('board', function($interval,$timeout){
+  .directive('board', function($interval,$timeout,$sce,$window){
     return{
       scope:{
       },
@@ -26,8 +26,6 @@ angular.module('board', [])
         }
 
         $scope.$root.$watch('socket',function(newValue){
-          console.info('socket ready');
-          console.info($scope.$root.socket);
           if(!newValue){
             return;
           }
@@ -35,9 +33,8 @@ angular.module('board', [])
           $scope.$root.socket.emit('getCategories', 1);
 
           $scope.$root.socket.on('returnCategories', function(resp){
-            console.info('categories returned');
-            console.info(resp);
             $scope.categories = resp;
+            $('board').unblock();
           });
 
           $scope.$root.socket.on('returnQuestion', function(resp){
@@ -46,7 +43,7 @@ angular.module('board', [])
               console.error('Querstion not found!');
             }
             else {
-              $scope.question = resp[0].question;
+              $scope.question = $sce.trustAsHtml(resp[0].question);
               questionID = resp[0].questionID;
               $scope.answers = resp;
 
@@ -99,7 +96,6 @@ angular.module('board', [])
 
               updateBoard(categoryID,amount,progress.correct);
             });
-            $('board').unblock();
           });
         });
 
@@ -123,12 +119,15 @@ angular.module('board', [])
           {amount:1000}
         ];
 
-        var category_, amount_;
+        var category_, amount_, categoryLast_, amountLast_;
         $scope.chooseQuestion = function(categoryID,amount){
-          if(!window.user){
+          if(!window.user || !window.user.charSprite){
+            categoryLast_ = categoryID;
+            amountLast_ = amount;
             $scope.$root.showLogin = true;
             return;
           }
+
           if(progress_[categoryID] && progress_[categoryID][amount]){
             return;
           }
@@ -143,6 +142,20 @@ angular.module('board', [])
         $scope.chooseAnswer = function(answerID){
           $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.email);
         };
+
+        //watch for login data
+        $scope.$watch(
+          function () {
+            return $window.user
+          }, function(n){
+            if(n && n.charSprite && categoryLast_ && amountLast_){
+              $scope.chooseQuestion(categoryLast_,amountLast_);
+              categoryLast_ = undefined;
+              amountLast_ = undefined;
+            }
+          }, true
+        );
+
       }
     };
   });
