@@ -1,6 +1,5 @@
 board{
 	color:#FF9F1C;
-	padding:20px 0px 20px 10px;
 	width:100%;
 }
 
@@ -16,7 +15,8 @@ board .category-name, board .question{
 }
 
 board .category-name{
-	color:#FDFFFC;
+	//color:#FDFFFC;
+	text-transform: uppercase;
 }
 
 board .question{

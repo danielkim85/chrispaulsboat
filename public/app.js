@@ -42,7 +42,6 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
   $rootScope.socket.on('connect', function(){
     //ensures the login process doesn't kick off before socket is connected.
     loadScript('modules/login/facebook.js', 'text/javascript', 'utf-8');
-    loadScript('modules/login/google.js', 'text/javascript', 'utf-8');
     loadScript('https://apis.google.com/js/platform.js?onload=renderButton', 'text/javascript', 'utf-8');
   });
 
@@ -69,7 +68,6 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   var skipOpeningSound = false;
   $scope.$root.socket.on('returnCompletion', function(resp){
-    console.info(resp);
 
     //soundboard
     if(!skipOpeningSound) {
