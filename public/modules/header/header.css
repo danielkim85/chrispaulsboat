@@ -5,6 +5,14 @@ header{
 header #countdown{
 	display:inline-block;
 	position:relative;
-	width:285px;
+	width:180px;
 	vertical-align:super;
+}
+
+header #groom{
+	margin-right:5px;
+}
+
+header #bride{
+	margin-left:5px;
 }

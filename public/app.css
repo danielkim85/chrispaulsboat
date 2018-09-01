@@ -61,7 +61,7 @@ h1{
 }
 
 #container{
-	margin:15px;
+	margin:15px 15px 70px 15px;
 	text-align:center;
 }
 
@@ -71,4 +71,34 @@ h1{
 
 #player{
 	float:right;
+}
+
+@media (max-width:885px){
+	board{
+		padding-bottom:10px;
+	}
+
+	board .question-container{
+		display:none;
+	}
+
+	board .question{
+		border:1px white solid;
+	}
+
+	board .category {
+		width:100%;
+	}
+
+	board .category-name, board .question{
+		margin-left:10px;
+		margin-bottom:0px;
+		cursor:pointer;
+	}
+}
+
+@media (min-width:886px){
+	.question-container{
+		display:block !important;
+	}
 }

@@ -6,7 +6,10 @@ angular.module('leaderboard', [])
       templateUrl: 'modules/leaderboard/leaderboard.tpl.html',
       link: function($scope){
 
-        var modal = UIkit.modal("#modalLeaderboard");
+        var modal = UIkit.modal('#modalLeaderboard');
+        $(document).on('hide', $('#modalLeaderboard'), function() {
+          $scope.$root.showLeaderboard = false;
+        });
 
         $scope.$root.$watch('showLeaderboard',function(n){
           if(n){

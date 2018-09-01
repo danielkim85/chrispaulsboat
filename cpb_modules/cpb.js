@@ -18,7 +18,7 @@ function shuffle(a) {
 
 function getScore(connection, socket, sessionID, callback){
   connection.query(
-    'select sessionID, SUM(amount) as amount from \n' +
+    'select sessionID, SUM(amount * (dailyDouble + 1)) as amount from \n' +
     '(select * from interactions where sessionID = ? order by timestamp asc LIMIT 30) i \n' +
     'join questions q on i.questionID = q.id \n' +
     'join answers a on i.answerID = a.id AND a.correct = 1 \n' +
@@ -241,8 +241,10 @@ function cpb(server){
     });
 
     socket.on('getQuestion', function(categoryID, amount){
+      console.info(categoryID);
+      console.info(amount);
       connection.query(
-        'select q.id as questionID, a.id as answerID, q.text as question, a.text as answer from questions q \n' +
+        'select q.id as questionID, a.id as answerID, q.text as question, a.text as answer, dailyDouble from questions q \n' +
         'join answers a on a.questionID = q.id \n' +
         'where categoryId = ? AND amount = ?;',
         [categoryID,amount],

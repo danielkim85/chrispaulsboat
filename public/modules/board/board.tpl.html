@@ -2,7 +2,8 @@
 	<div class="category"
 			 categoryId="{{category.id}}"
 			 ng-repeat="category in categories">
-		<div class="category-name font-small yellow-background blue-foreground">
+		<div class="category-name font-small yellow-background blue-foreground"
+				 ng-click="showQuestions(category.id);">
 			{{category.name}}
 		</div>
 		<div class="question-container uk-animation-toggle"
@@ -19,6 +20,9 @@
 <div id="questionBoard"
 		 class="green-background white-foreground"
 		 ng-show="showQuestionBoard">
+	<div ng-show="isDailyDouble" id="dailyDouble" class="red-background">
+		Daily Double!
+	</div>
 	<div id="question" ng-bind-html="question">
 
 	</div>

@@ -35,3 +35,7 @@ board .answers{
 	padding:20px;
 	margin:20px;
 }
+
+board #dailyDouble{
+	padding:10px;
+}

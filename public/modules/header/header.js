@@ -6,7 +6,7 @@ angular.module('header', [])
       templateUrl: 'modules/header/header.tpl.html',
       link: function($scope){
 
-        var weddingDate = new Date(2018, 8, 21);
+        var weddingDate = new Date(2018, 8, 23);
 
         tikTok();
         $interval(tikTok,1000);
@@ -14,15 +14,9 @@ angular.module('header', [])
         //helper
         function tikTok(){
           var ts = countdown(weddingDate);
-          if($scope.months !== ts.months){
-            $scope.months = ts.months
-          }
 
           if($scope.days !== ts.days) {
             $scope.days = ts.days;
-            var totalDays = ts.months*30 + ts.days;
-            jQuery('#groom').css('margin-right',totalDays*2 + 'px');
-            jQuery('#bride').css('margin-left',totalDays*2 + 'px');
           }
 
           if($scope.hours !== pad(ts.hours,2)){

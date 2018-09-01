@@ -38,17 +38,24 @@ angular.module('board', [])
           });
 
           $scope.$root.socket.on('returnQuestion', function(resp){
-            if(resp === null){
+            if(!resp){
               //error
               console.error('Querstion not found!');
             }
             else {
+              var audio;
+              $scope.isDailyDouble = resp[0].dailyDouble;
+              if($scope.isDailyDouble){
+                //soundboard
+                audio = new Audio('assets/audio/daily_double.mp3');
+                audio.play();
+              }
               $scope.question = $sce.trustAsHtml(resp[0].question);
               questionID = resp[0].questionID;
               $scope.answers = resp;
 
               //soundboard
-              var audio = new Audio('assets/audio/board_fill.mp3');
+              audio = new Audio('assets/audio/board_fill.mp3');
               audio.play();
             }
           });
@@ -141,6 +148,13 @@ angular.module('board', [])
         var questionID;
         $scope.chooseAnswer = function(answerID){
           $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.email);
+        };
+
+        $scope.showQuestions = function(categoryID){
+          console.info(categoryID);
+          var isHidden = $('.question-container:first').is(':hidden');
+          $('.question-container').hide();
+          $('.category[categoryID="' + categoryID + '"] .question-container').show();
         };
 
         //watch for login data
