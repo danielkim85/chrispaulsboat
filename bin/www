@@ -12,8 +12,8 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '3002');
+var parseArgs = require('minimist') (process.argv.slice(2));
+var port = parseArgs.port || 3002;
 app.set('port', port);
 
 /**
