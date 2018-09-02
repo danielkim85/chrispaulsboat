@@ -11,7 +11,11 @@ function onSuccess(googleUser) {
     type:'google',
     email:profile.getEmail(),
     name:profile.getName(),
-    picture:profile.getImageUrl()
+    picture:profile.getImageUrl(),
+    accessToken : {
+      type:'google',
+      token:googleUser.getAuthResponse().id_token
+    }
   }
 }
 

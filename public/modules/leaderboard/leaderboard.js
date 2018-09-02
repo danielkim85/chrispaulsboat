@@ -31,7 +31,7 @@ angular.module('leaderboard', [])
         });
 
         $scope.createNewGame = function(){
-          $scope.$root.socket.emit('createNewGame',1,window.user.email);
+          $scope.$root.socket.emit('createNewGame',1,window.user.accessToken);
         };
 
       }

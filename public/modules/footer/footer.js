@@ -1,5 +1,5 @@
 angular.module('footer', [])
-  .directive('footer', function($rootScope){
+  .directive('footer', function($rootScope, $http){
     return{
       scope:{
       },

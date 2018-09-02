@@ -1,9 +1,35 @@
-var mysql = require('mysql');
-var db = require('../cpb_modules/db.js');
+const mysql = require('mysql');
+const db = require('../cpb_modules/db.js');
+const {OAuth2Client} = require('google-auth-library');
+const FB = require('fb');
+
+const CLIENT_ID = '519191212714-1qav99v7gaaj78ab1j2khllbqbst0suq.apps.googleusercontent.com';
+const client = new OAuth2Client(CLIENT_ID);
 
 var userMap = {};
 
-var MAX_INTERACTIONS = 30;
+const MAX_INTERACTIONS = 30;
+
+async function verify(accessToken,callback) {
+  if(accessToken.type === 'google'){
+    const ticket = await client.verifyIdToken({
+      idToken: accessToken.token,
+      audience: CLIENT_ID
+    });
+    var payload = ticket.getPayload();
+    callback(payload.email);
+  } else if(accessToken.type === 'fb'){
+    const fb = FB.withAccessToken(accessToken.token);
+    fb.api('/me?fields=email', function (res) {
+      if(res && res.error) {
+        throw res.error;
+      }
+      else{
+        callback(res.email);
+      }
+    });
+  }
+}
 
 function shuffle(a) {
   var j, x, i;
@@ -187,46 +213,54 @@ function cpb(server){
 
   io.on('connection', function(socket){
 
-    socket.on('getPlayer', function(email){
-      if(!email){
+    socket.on('getPlayer', function(token){
+      if(!token){
         return;
       }
-      getPlayer(connection,socket,email);
+      verify(token,function(email){
+        getPlayer(connection,socket,email);
+      }).catch(console.error);
     });
 
-    socket.on('createNewGame', function(gameID, email){
-      if(!email){
+    socket.on('createNewGame', function(gameID, token){
+      if(!token){
         return;
       }
+      verify(token,function(email){
+        getPlayer(connection,socket,email,true);
+      }).catch(console.error);
 
-      getPlayer(connection,socket,email,true);
     });
 
-    socket.on('insertPlayer', function(gameID, name, sprite, email){
-      if(!email){
+    socket.on('insertPlayer', function(gameID, name, sprite, token){
+      if(!token){
         return;
       }
+      verify(token,function(email){
+        connection.query(
+          'INSERT INTO players(email,name,sprite,gameID) values(?,?,?,?)',
+          [email,name,sprite,gameID],
+          function (error) {
+            if (error) return;
+            getPlayer(connection,socket,email);
+          });
+      }).catch(console.error);
 
-      connection.query(
-        'INSERT INTO players(email,name,sprite,gameID) values(?,?,?,?)',
-        [email,name,sprite,gameID],
-        function (error) {
-          if (error) return;
-          getPlayer(connection,socket,email);
-        });
     });
 
-    socket.on('getProgress', function(sessionID){
-      connection.query(
-        'select i.questionID,categoryID,amount,correct from interactions i \n' +
-        'join questions q on q.id = i.questionID \n' +
-        'join answers a on i.answerID = a.ID \n' +
-        'where sessionId = ?',
-        [sessionID],
-        function (error, results, fields) {
-          if (error) return;
-          socket.emit('returnProgress',results);
-        });
+    socket.on('getProgress', function(sessionID,token){
+      verify(token,function(){
+        connection.query(
+          'select i.questionID,categoryID,amount,correct from interactions i \n' +
+          'join questions q on q.id = i.questionID \n' +
+          'join answers a on i.answerID = a.ID \n' +
+          'where sessionId = ?',
+          [sessionID],
+          function (error, results, fields) {
+            if (error) return;
+            socket.emit('returnProgress',results);
+          });
+      }).catch(console.error);
     });
 
     socket.on('getCategories', function(gameID){
@@ -241,8 +275,6 @@ function cpb(server){
     });
 
     socket.on('getQuestion', function(categoryID, amount){
-      console.info(categoryID);
-      console.info(amount);
       connection.query(
         'select q.id as questionID, a.id as answerID, q.text as question, a.text as answer, dailyDouble from questions q \n' +
         'join answers a on a.questionID = q.id \n' +
@@ -255,24 +287,30 @@ function cpb(server){
       });
     });
 
-    socket.on('checkAnswer', function(questionID,answerID,email){
-      connection.query(
-        'select a.id from questions q \n' +
-        'join answers a on a.questionID = q.id \n' +
-        'where a.correct = TRUE AND q.id = ? AND a.id = ?;',
-        [questionID, answerID],
-        function (error, results) {
-          if (error) return;
-          insertInteraction(connection,socket,email,questionID,answerID,results);
-        });
+    socket.on('checkAnswer', function(questionID,answerID,token){
+      verify(token,function(email){
+        connection.query(
+          'select a.id from questions q \n' +
+          'join answers a on a.questionID = q.id \n' +
+          'where a.correct = TRUE AND q.id = ? AND a.id = ?;',
+          [questionID, answerID],
+          function (error, results) {
+            if (error) return;
+            insertInteraction(connection,socket,email,questionID,answerID,results);
+          });
+      }).catch(console.error);
     });
 
-    socket.on('getScore', function(sessionID){
-      getScore(connection,socket,sessionID);
+    socket.on('getScore', function(sessionID,token){
+      verify(token,function(){
+        getScore(connection,socket,sessionID);
+      }).catch(console.error);
     });
 
-    socket.on('checkCompletion', function(sessionID){
-      checkCompletion(connection,socket,sessionID);
+    socket.on('checkCompletion', function(sessionID,token){
+      verify(token,function(){
+        checkCompletion(connection,socket,sessionID);
+      }).catch(console.error);
     });
 
     socket.on('getLeaderboard', function(){

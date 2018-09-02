@@ -85,7 +85,7 @@ angular.module('board', [])
               audio.play();
             }
 
-            $scope.$root.socket.emit('getScore',$scope.$root.sessionID);
+            $scope.$root.socket.emit('getScore',$scope.$root.sessionID, window.user.accessToken);
             updateBoard(category_,amount_,resp);
             $scope.showQuestionBoard = false;
 
@@ -114,7 +114,7 @@ angular.module('board', [])
 
         $scope.$root.$watch('sessionID',function(n){
           if(n){
-            $scope.$root.socket.emit('getProgress', n);
+            $scope.$root.socket.emit('getProgress', n, window.user.accessToken);
           }
         });
 
@@ -147,11 +147,10 @@ angular.module('board', [])
 
         var questionID;
         $scope.chooseAnswer = function(answerID){
-          $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.email);
+          $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.accessToken);
         };
 
         $scope.showQuestions = function(categoryID){
-          console.info(categoryID);
           var isHidden = $('.question-container:first').is(':hidden');
           $('.question-container').hide();
           $('.category[categoryID="' + categoryID + '"] .question-container').show();

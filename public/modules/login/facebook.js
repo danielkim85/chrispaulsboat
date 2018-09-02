@@ -13,12 +13,17 @@ function checkLoginState() {
 
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
+      var token = response.authResponse.accessToken;
       FB.api('/me?fields=name,id,picture,email', function(response) {
         window.user = {
           type:'facebook',
           email:response.email,
           name:response.name,
-          picture:response.picture.data.url
+          picture:response.picture.data.url,
+          accessToken : {
+            type:'fb',
+            token:token
+          }
         };
       });
     }

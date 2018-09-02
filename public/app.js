@@ -57,8 +57,8 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   $scope.$root.socket.on('returnSession', function(resp){
     $scope.$root.sessionID = resp;
-    $scope.$root.socket.emit('getScore',resp);
-    $scope.$root.socket.emit('checkCompletion', resp)
+    $scope.$root.socket.emit('getScore',resp, window.user.accessToken);
+    $scope.$root.socket.emit('checkCompletion', resp, window.user.accessToken)
   });
 
   $scope.$root.socket.on('returnScore', function(resp){
@@ -89,14 +89,14 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     }, function(n,o){
       if(n){
         $rootScope.isLoggedIn = true;
-        $scope.$root.socket.emit('getPlayer', n.email);
+        $scope.$root.socket.emit('getPlayer', window.user.accessToken);
 
         if(n.charSprite){
           $scope.player = {};
           $scope.player.sprite = n.charSprite;
 
           //get user data from io
-          $scope.$root.socket.emit('insertPlayer', 1, n.name, n.charSprite, n.email);
+          $scope.$root.socket.emit('insertPlayer', 1, n.name, n.charSprite, window.user.accessToken);
         }
         else{
           $scope.$root.showLogin = true;
