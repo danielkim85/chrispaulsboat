@@ -31,6 +31,7 @@ angular.module('leaderboard', [])
         });
 
         $scope.createNewGame = function(){
+          $('board').block({ message: 'Loading ...' });
           $scope.$root.socket.emit('createNewGame',1,window.user.accessToken);
         };
 

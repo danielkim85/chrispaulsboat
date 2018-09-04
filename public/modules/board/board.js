@@ -61,6 +61,7 @@ angular.module('board', [])
           });
 
           $scope.$root.socket.on('returnAnswer', function(resp){
+            $('board').unblock();
             if(!progress_[category_]){
               progress_[category_] = {};
             }
@@ -147,6 +148,8 @@ angular.module('board', [])
 
         var questionID;
         $scope.chooseAnswer = function(answerID){
+          $scope.answers = [];
+          $('board').block({ message: 'Loading ...' });
           $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.accessToken);
         };
 

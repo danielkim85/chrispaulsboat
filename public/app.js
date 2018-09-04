@@ -48,7 +48,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
   $rootScope.socket.on('disconnect', function(){
   });
 
+  var blockLogin = false;
   $scope.$root.socket.on('returnUser', function(resp){
+    blockLogin = false;
     $scope.player = {};
     $scope.player.sprite = resp.sprite;
     $window.user.charSprite = resp.sprite;
@@ -56,6 +58,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
   });
 
   $scope.$root.socket.on('returnSession', function(resp){
+    if($scope.$root.showLeaderboard){
+      window.location = '/';
+    }
     $scope.$root.sessionID = resp;
     $scope.$root.socket.emit('getScore',resp, window.user.accessToken);
     $scope.$root.socket.emit('checkCompletion', resp, window.user.accessToken)
@@ -89,6 +94,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     }, function(n,o){
       if(n){
         $rootScope.isLoggedIn = true;
+        blockLogin = true;
         $scope.$root.socket.emit('getPlayer', window.user.accessToken);
 
         if(n.charSprite){
@@ -99,7 +105,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
           $scope.$root.socket.emit('insertPlayer', 1, n.name, n.charSprite, window.user.accessToken);
         }
         else{
-          $scope.$root.showLogin = true;
+          if(!blockLogin){
+            $scope.$root.showLogin = true;
+          }
         }
       }
       else{

@@ -64,7 +64,8 @@ angular.module('login', [])
             email:window.user.email,
             name:$scope.charName,
             picture:window.user.picture,
-            charSprite:$scope.charSprite
+            charSprite:$scope.charSprite,
+            accessToken:window.user.accessToken
           };
 
           $scope.user = undefined;

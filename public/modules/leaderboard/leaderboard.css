@@ -7,3 +7,8 @@
 #modalLeaderboard .winner{
 	margin-bottom:10px;
 }
+
+#modalLeaderboard #credit{
+	font-size:10px;
+	margin-bottom:20px;
+}
