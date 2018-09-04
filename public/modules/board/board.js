@@ -148,6 +148,7 @@ angular.module('board', [])
 
         var questionID;
         $scope.chooseAnswer = function(answerID){
+          $scope.question = '';
           $scope.answers = [];
           $('board').block({ message: 'Loading ...' });
           $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.accessToken);
