@@ -50,7 +50,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window,$timeout) {
   $rootScope.socket.on('connect', function(){
     //ensures the login process doesn't kick off before socket is connected.
     loadScript('modules/login/facebook.js', 'text/javascript', 'utf-8');
-    loadGoogleLogin();
+    //loadGoogleLogin();
 
   });
 
