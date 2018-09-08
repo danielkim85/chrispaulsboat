@@ -1,6 +1,6 @@
 var app = angular.module('BoatApp', ['header','board','leaderboard','login','footer','sprite']);
 
-app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
+app.controller('BoatCtrl', function ($scope,$rootScope,$window,$timeout) {
 
   function loadScript(url, type, charset) {
     if (type===undefined) type = 'text/javascript';
@@ -39,10 +39,19 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     reconnectionAttempts: Infinity
   });
 
+  function loadGoogleLogin(){
+    if(typeof renderButton === 'undefined'){
+      $timeout(loadGoogleLogin, 500);
+      return;
+    }
+    loadScript('https://apis.google.com/js/platform.js?onload=renderButton', 'text/javascript', 'utf-8');
+  }
+
   $rootScope.socket.on('connect', function(){
     //ensures the login process doesn't kick off before socket is connected.
     loadScript('modules/login/facebook.js', 'text/javascript', 'utf-8');
-    loadScript('https://apis.google.com/js/platform.js?onload=renderButton', 'text/javascript', 'utf-8');
+    loadGoogleLogin();
+
   });
 
   $rootScope.socket.on('disconnect', function(){
