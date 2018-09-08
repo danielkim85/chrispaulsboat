@@ -6,6 +6,8 @@ angular.module('login', [])
       templateUrl: 'modules/login/login.tpl.html',
       link: function($scope){
 
+        loadScript('https://apis.google.com/js/platform.js?onload=renderButton', 'text/javascript', 'utf-8');
+
         var modal = UIkit.modal("#modalLogin");
 
         $scope.$root.$watch('showLogin',function(n){
