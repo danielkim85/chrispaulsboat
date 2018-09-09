@@ -1,6 +1,8 @@
 board{
-	color:#FF9F1C;
+	color:#FFF;
 	width:100%;
+	padding-bottom:5px;
+	min-width:950px;
 }
 
 board, board .category{
@@ -10,7 +12,7 @@ board, board .category{
 board .category-name, board .question{
 	text-align:center;
 	min-width:100px;
-	margin:10px 10px 10px 0px;
+	margin:15px 15px 15px 0px;
 	padding:15px;
 }
 
@@ -21,6 +23,7 @@ board .category-name{
 
 board .question{
 	cursor:pointer;
+	border: 1px solid transparent;
 }
 
 board #questionBoard{

@@ -12,11 +12,11 @@ angular.module('board', [])
         function updateBoard(categoryID, amount, correct){
           var obj = $('.category[categoryID="' + categoryID + '"] .question-container[amount="' + amount + '"] .question');
           obj.css('cursor','default');
-          obj.removeClass('uk-animation-scale-down');
-          obj.removeClass('blue-background');
+          obj.removeClass('raised');
+          //obj.removeClass('blue-background');
 
           if(correct){
-            obj.addClass('blue-foreground');
+            obj.addClass('yellow-foreground');
             obj.html('CORRECT');
           }
           else{
@@ -155,9 +155,11 @@ angular.module('board', [])
         };
 
         $scope.showQuestions = function(categoryID){
-          var isHidden = $('.question-container:first').is(':hidden');
           $('.question-container').hide();
+          $('.category').css('margin','0px');
           $('.category[categoryID="' + categoryID + '"] .question-container').show();
+          var obj = $('.category[categoryID="' + categoryID + '"]');
+          obj.css('margin','15px 0 15px 0');
         };
 
         //watch for login data

@@ -6,11 +6,11 @@
 				 ng-click="showQuestions(category.id);">
 			{{category.name}}
 		</div>
-		<div class="question-container uk-animation-toggle"
+		<div class="question-container"
 				 category="{{category.name}}"
 				 amount="{{question.amount}}"
 				 ng-repeat="question in questions">
-			<div class="question font-small uk-animation-scale-down blue-background"
+			<div class="question font-small blue-background raised"
 					 ng-click="chooseQuestion(category.id,question.amount);">
 				${{question.amount}}
 			</div>
