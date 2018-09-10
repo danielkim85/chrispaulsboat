@@ -3,10 +3,9 @@ var app = angular.module('BoatApp', ['header','board','leaderboard','login','foo
 app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   //socket
-  var protocol = "http://";
   var host =  window.location.hostname;
   var port =  host === 'localhost' ? '3002' : '80';
-
+  var protocol = host === 'localhost' ? 'http://' : 'https://';
   $scope.host = {};
   $scope.host.msg = {txt:'Welcome!',color:'blue'};
 
