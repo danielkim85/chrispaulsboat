@@ -1,7 +1,11 @@
 #modalLeaderboard .amount{
-	float:left;
-	width:80px;
+	display:inline-block;
+	width:100px;
 	margin-left:20px;
+}
+
+#modalLeaderboard .name{
+	display:inline-block;
 }
 
 #modalLeaderboard .winner{

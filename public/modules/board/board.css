@@ -2,11 +2,15 @@ board{
 	color:#FFF;
 	width:100%;
 	padding-bottom:5px;
-	min-width:950px;
+	min-width:915px;
 }
 
 board, board .category{
 	display:inline-block;
+}
+
+board .category:last-child .category-name, board .category:last-child .question{
+	margin-right:0;
 }
 
 board .category-name, board .question{
