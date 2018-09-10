@@ -4,7 +4,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   //socket
   var host =  window.location.hostname;
-  var port =  host === 'localhost' ? '3002' : '80';
+  var port =  host === 'localhost' ? '3002' : '443';
   var protocol = host === 'localhost' ? 'http://' : 'https://';
   $scope.host = {};
   $scope.host.msg = {txt:'Welcome!',color:'blue'};
