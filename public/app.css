@@ -116,7 +116,7 @@ h1{
 
 @media (max-width:885px){
 	board{
-		padding-bottom:10px;
+		padding-bottom:20px;
 		min-width:0px;
 	}
 
@@ -156,10 +156,19 @@ h1{
 		-moz-box-shadow: 0px 6px 0px #A76C1A, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
 		box-shadow: 0px 6px 0px #A76C1A, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
 	}
+
+	board .progress{
+		display:block;
+		float:right;
+		margin-right:-55px;
+	}
 }
 
 @media (min-width:886px){
 	.question-container{
 		display:block !important;
+	}
+	board .progress{
+		display:none;
 	}
 }

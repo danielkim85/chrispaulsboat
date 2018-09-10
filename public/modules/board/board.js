@@ -7,7 +7,7 @@ angular.module('board', [])
       link: function($scope){
         $('board').block({ message: 'Loading ...' });
 
-        var progress_ = {};
+        $scope.progress = {};
 
         function updateBoard(categoryID, amount, correct){
           var obj = $('.category[categoryID="' + categoryID + '"] .question-container[amount="' + amount + '"] .question');
@@ -62,10 +62,10 @@ angular.module('board', [])
 
           $scope.$root.socket.on('returnAnswer', function(resp){
             $('board').unblock();
-            if(!progress_[category_]){
-              progress_[category_] = {};
+            if(!$scope.progress[category_]){
+              $scope.progress[category_] = {};
             }
-            progress_[category_][amount_] = { correct : resp };
+            $scope.progress[category_][amount_] = { correct : resp };
             $scope.$parent.host.moving = true;
             $timeout(function(){
               $scope.$parent.host.moving = false;
@@ -96,11 +96,13 @@ angular.module('board', [])
             resp.forEach(function(progress){
               var categoryID = progress.categoryID;
               var amount = progress.amount;
-              if(!progress_[categoryID]){
-                progress_[categoryID] = {};
+              if(!$scope.progress[categoryID]){
+                $scope.progress[categoryID] = {};
+                $scope.progress[categoryID].completed = 0;
               }
-              progress_[categoryID][amount] = {};
-              progress_[categoryID][amount].correct = progress.correct;
+              $scope.progress[categoryID][amount] = {};
+              $scope.progress[categoryID][amount].correct = progress.correct;
+              $scope.progress[categoryID].completed++;
 
               updateBoard(categoryID,amount,progress.correct);
             });
@@ -136,7 +138,7 @@ angular.module('board', [])
             return;
           }
 
-          if(progress_[categoryID] && progress_[categoryID][amount]){
+          if($scope.progress[categoryID] && $scope.progress[categoryID][amount]){
             return;
           }
 

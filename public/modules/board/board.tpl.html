@@ -5,6 +5,9 @@
 		<div class="category-name font-small yellow-background blue-foreground"
 				 ng-click="showQuestions(category.id);">
 			{{category.name}}
+			<div class="progress red-foreground">
+				{{progress[category.id].completed ? progress[category.id].completed : 0}}/5
+			</div>
 		</div>
 		<div class="question-container"
 				 category="{{category.name}}"

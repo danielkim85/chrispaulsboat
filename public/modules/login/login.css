@@ -2,6 +2,9 @@
 	text-align:center;
 }
 
+#modalLogin .uk-modal-dialog{
+	margin-top:20px;
+}
 #gSignin{
 	display:inline-block;
 	top: 4px;
