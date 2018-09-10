@@ -11,6 +11,10 @@
 	position: relative;
 }
 
+#gSignin .abcRioButton{
+	width:238px !important;;
+}
+
 .login-button{
 	margin:10px 0px;
 }
