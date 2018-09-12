@@ -3,6 +3,7 @@ board{
 	width:100%;
 	padding-bottom:5px;
 	min-width:915px;
+	text-transform: uppercase;
 }
 
 board, board .category{
@@ -21,8 +22,13 @@ board .category-name, board .question{
 }
 
 board .category-name{
-	//color:#FDFFFC;
-	text-transform: uppercase;
+	width:126px;
+	font-size:10px;
+	min-height:50px;
+	display:flex;
+	padding:10px 3px;
+	align-items: center;
+	line-height:20px;
 }
 
 board .question{
@@ -35,6 +41,18 @@ board #questionBoard{
 
 board #question{
 	margin:20px;
+	//text-align:left;
+}
+
+board #question, board .answers{
+	line-height:32px;
+	font-size:14px;
+}
+
+board #question img{
+	display:block;
+	margin:0 auto;
+	margin-top:10px;
 }
 
 board .answers{

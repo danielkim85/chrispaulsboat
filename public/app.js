@@ -48,17 +48,9 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     $scope.player.msg = {txt:'$' + amount,color:'blue',direction:'left'};
   });
 
-  var skipOpeningSound = false;
   $scope.$root.socket.on('returnCompletion', function(resp){
-
-    //soundboard
-    if(!skipOpeningSound) {
-      var audio = new Audio('assets/audio/opening.mp3');
-      audio.play();
-      skipOpeningSound = true;
-    }
-
     if(resp.count === resp.max){
+      $scope.$root.showPlayAgainButton = true;
       $scope.$root.socket.emit('getLeaderboard');
       $scope.$root.showLeaderboard = true;
     }

@@ -123,8 +123,11 @@ h1{
 		display:none;
 	}
 
-	board .question{
-		//border:1px white solid;
+	board .category-name{
+		width:unset;
+		display:block;
+		min-height:unset;
+		line-height:unset;
 	}
 
 	board .category {
@@ -140,7 +143,7 @@ h1{
 	board .category-name{
 		text-decoration: none;
 		font-weight: bold;
-		padding: 20px 70px;
+		padding: 20px 20px;
 		border: 1px solid #FF9F1C;
 		background-image: linear-gradient(bottom,  #CB811D 0%, #FF9F1C 100%);
 		background-image: -o-linear-gradient(bottom,  #CB811D 0%, #FF9F1C 100%);
@@ -159,16 +162,27 @@ h1{
 	board .progress{
 		display:block;
 		float:right;
-		margin-right:-55px;
+		font-size:10px;
+		//margin-right:-55px;
 	}
-	board .category:last-child .category-name{
+	board .category:last-child .category-name, board .category:last-child .question{
 		margin-right:15px;
+	}
+	#modalLeaderboard .amount{
+		margin-left:0;
+		width:80px;
+	}
+	#modalLeaderboard .winner{
+		font-size:12px;
 	}
 }
 
 @media (min-width:886px){
 	.question-container{
 		display:block !important;
+	}
+	.category{
+		margin:0 !important;
 	}
 	board .progress{
 		display:none;

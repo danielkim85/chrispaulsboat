@@ -157,9 +157,13 @@ angular.module('board', [])
         };
 
         $scope.showQuestions = function(categoryID){
+          var questionContainer = $('.category[categoryID="' + categoryID + '"] .question-container');
+          if(questionContainer.is(':visible')){
+            return;
+          }
           $('.question-container').hide();
           $('.category').css('margin','0px');
-          $('.category[categoryID="' + categoryID + '"] .question-container').show();
+          questionContainer.show();
           var obj = $('.category[categoryID="' + categoryID + '"]');
           obj.css('margin','15px 0 15px 0');
         };
@@ -177,6 +181,10 @@ angular.module('board', [])
           }, true
         );
 
+        //soundboard
+        var audio = new Audio('assets/audio/opening.mp3');
+        audio.play();
+        skipOpeningSound = true;
       }
     };
   });

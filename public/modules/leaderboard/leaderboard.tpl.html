@@ -32,7 +32,11 @@
 		</ol>
 
 		<div>
-			<button class="uk-button uk-button-primary" ng-click="createNewGame();">Play again</button>
+			<button class="uk-button uk-button-primary"
+							ng-show="$root.showPlayAgainButton"
+							ng-click="createNewGame();">
+				Play again
+			</button>
 		</div>
 	</div>
 </div>
