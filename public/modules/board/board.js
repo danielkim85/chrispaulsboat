@@ -25,14 +25,14 @@ angular.module('board', [])
           }
         }
 
-        $scope.$root.$watch('socket',function(newValue){
+        $scope.$root.$watch('socket.connected',function(newValue){
+          console.info(newValue);
           if(!newValue){
             return;
           }
 
-          $scope.$root.socket.emit('getCategories', 1);
-
           $scope.$root.socket.on('returnCategories', function(resp){
+            console.warn(resp);
             $scope.categories = resp;
             $('board').unblock();
           });
@@ -107,6 +107,10 @@ angular.module('board', [])
               updateBoard(categoryID,amount,progress.correct);
             });
           });
+
+          console.info('get categories');
+          console.info($scope.$root.socket);
+          $scope.$root.socket.emit('getCategories', 1);
         });
 
         $scope.$root.$watch('isLoggedIn',function(n){

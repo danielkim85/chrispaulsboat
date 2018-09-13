@@ -1,6 +1,6 @@
 var app = angular.module('BoatApp', ['header','board','leaderboard','login','footer','sprite']);
 
-app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
+app.controller('BoatCtrl', function ($scope,$window) {
 
   //socket
   var host =  window.location.hostname;
@@ -9,7 +9,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
   $scope.host = {};
   $scope.host.msg = {txt:'Welcome!',color:'blue'};
 
-  $rootScope.socket = io.connect(protocol + host + ':' + port,{
+  $scope.$root.socket = io.connect(protocol + host + ':' + port,{
     'sync disconnect on unload': true,
     reconnection: true,
     reconnectionDelay: 1000,
@@ -17,12 +17,14 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
     reconnectionAttempts: Infinity
   });
 
-  $rootScope.socket.on('connect', function(){
+  $scope.$root.socket.on('connect', function(){
+    console.info('connected');
     //ensures the login process doesn't kick off before socket is connected.
     loadScript('modules/login/facebook.js', 'text/javascript', 'utf-8');
   });
 
-  $rootScope.socket.on('disconnect', function(){
+  $scope.$root.socket.on('disconnected', function(){
+    console.info('disconnected');
   });
 
   var blockLogin = false;
@@ -36,6 +38,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
 
   $scope.$root.socket.on('returnSession', function(resp){
     if($scope.$root.showLeaderboard){
+      console.info(resp);
       window.location = '/';
     }
     $scope.$root.sessionID = resp;
@@ -62,7 +65,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
       return $window.user
     }, function(n,o){
       if(n){
-        $rootScope.isLoggedIn = true;
+        $scope.$root.isLoggedIn = true;
         blockLogin = true;
         $scope.$root.socket.emit('getPlayer', window.user.accessToken);
 
@@ -80,7 +83,7 @@ app.controller('BoatCtrl', function ($scope,$rootScope,$window) {
         }
       }
       else{
-        $rootScope.isLoggedIn = false;
+        $scope.$root.isLoggedIn = false;
       }
     }
   );

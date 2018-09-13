@@ -4,6 +4,7 @@ board{
 	padding-bottom:5px;
 	min-width:915px;
 	text-transform: uppercase;
+	max-width:915px;
 }
 
 board, board .category{
@@ -45,14 +46,24 @@ board #question{
 }
 
 board #question, board .answers{
+	font-family: 'Concert One', cursive;
+}
+
+board #question{
+	line-height : 38px;
+	font-size:30px;
+}
+
+board .answers{
 	line-height:32px;
-	font-size:14px;
+	font-size:24px;
 }
 
 board #question img{
 	display:block;
 	margin:0 auto;
-	margin-top:10px;
+	margin-top:15px;
+	margin-bottom:5px;
 }
 
 board .answers{

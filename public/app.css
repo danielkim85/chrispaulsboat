@@ -5,6 +5,10 @@
 			url('/assets/fonts/8-bit pusab.ttf');
 }
 
+html{
+	background-image: url(assets/img/background.jpg);
+}
+
 body, h1{
 	font-family:'8bit' !important;
 }
@@ -67,6 +71,8 @@ h1{
 
 #interface{;
 	text-align:left;
+	max-width:915px;
+	margin:0 auto;
 }
 
 #player{
