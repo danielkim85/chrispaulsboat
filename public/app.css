@@ -6,7 +6,7 @@
 }
 
 html{
-	background-image: url(assets/img/background.jpg);
+	background: url('assets/img/background.png') repeat;
 }
 
 body, h1{

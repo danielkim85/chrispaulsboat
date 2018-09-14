@@ -26,13 +26,11 @@ angular.module('board', [])
         }
 
         $scope.$root.$watch('socket.connected',function(newValue){
-          console.info(newValue);
           if(!newValue){
             return;
           }
 
           $scope.$root.socket.on('returnCategories', function(resp){
-            console.warn(resp);
             $scope.categories = resp;
             $('board').unblock();
           });
@@ -80,7 +78,7 @@ angular.module('board', [])
               audio.play();
             }
             else{
-              $scope.$parent.host.msg = {txt:'Incorrect!',color:'red'};
+              $scope.$parent.host.msg = {txt:'WRONG!',color:'red'};
               //soundboard
               audio = new Audio('assets/audio/wrong.mp3');
               audio.play();
@@ -108,8 +106,6 @@ angular.module('board', [])
             });
           });
 
-          console.info('get categories');
-          console.info($scope.$root.socket);
           $scope.$root.socket.emit('getCategories', 1);
         });
 

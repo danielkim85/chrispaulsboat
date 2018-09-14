@@ -47,15 +47,14 @@ board #question{
 
 board #question, board .answers{
 	font-family: 'Concert One', cursive;
+	line-height:32px;
 }
 
 board #question{
-	line-height : 38px;
 	font-size:30px;
 }
 
 board .answers{
-	line-height:32px;
 	font-size:24px;
 }
 

@@ -18,13 +18,11 @@ app.controller('BoatCtrl', function ($scope,$window) {
   });
 
   $scope.$root.socket.on('connect', function(){
-    console.info('connected');
     //ensures the login process doesn't kick off before socket is connected.
     loadScript('modules/login/facebook.js', 'text/javascript', 'utf-8');
   });
 
   $scope.$root.socket.on('disconnected', function(){
-    console.info('disconnected');
   });
 
   var blockLogin = false;
@@ -38,7 +36,6 @@ app.controller('BoatCtrl', function ($scope,$window) {
 
   $scope.$root.socket.on('returnSession', function(resp){
     if($scope.$root.showLeaderboard){
-      console.info(resp);
       window.location = '/';
     }
     $scope.$root.sessionID = resp;

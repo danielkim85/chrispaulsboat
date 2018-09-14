@@ -191,9 +191,7 @@ function getPlayer(connection, socket, email, forceNewSession){
           insertSession(connection,socket,playerID,email);
         }
         else if(forceNewSession && results[0].sessionID){
-          console.warn('force new session');
           checkCompletion(connection,socket,results[0].sessionID,function(){
-            console.warn('check completion passed');
             insertSession(connection,socket,playerID,email);
           });
         }
@@ -266,7 +264,6 @@ function cpb(server){
     });
 
     socket.on('getCategories', function(gameID){
-      console.info('getCategories');
       connection.query(
         'SELECT id, name from categories where gameID = ?',
         [gameID],
@@ -275,7 +272,6 @@ function cpb(server){
           console.error(error);
           return;
         }
-        console.info('returning categories');
         socket.emit('returnCategories',results);
       });
     });
