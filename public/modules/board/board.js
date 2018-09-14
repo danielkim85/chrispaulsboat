@@ -62,8 +62,10 @@ angular.module('board', [])
             $('board').unblock();
             if(!$scope.progress[category_]){
               $scope.progress[category_] = {};
+              $scope.progress[category_].completed = 0;
             }
             $scope.progress[category_][amount_] = { correct : resp };
+            $scope.progress[category_].completed++;
             $scope.$parent.host.moving = true;
             $timeout(function(){
               $scope.$parent.host.moving = false;
