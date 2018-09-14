@@ -5,7 +5,7 @@ angular.module('board', [])
       },
       templateUrl: 'modules/board/board.tpl.html',
       link: function($scope){
-        $('board').block({ message: 'Loading ...' });
+        $('board').block({ message: '<img src="assets/img/loading.gif" />' });
 
         $scope.progress = {};
 
@@ -152,7 +152,7 @@ angular.module('board', [])
         $scope.chooseAnswer = function(answerID){
           $scope.question = '';
           $scope.answers = [];
-          $('board').block({ message: 'Loading ...' });
+          $('board').block({ message: '<img src="assets/img/loading.gif" />' });
           $scope.$root.socket.emit('checkAnswer', questionID, answerID, window.user.accessToken);
         };
 
