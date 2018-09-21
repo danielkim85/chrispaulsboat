@@ -93,10 +93,11 @@ function insertSession(connection, socket, playerID,email){
 
 function getLeaderboard(connection,socket){
   connection.query(
-    'select name,amount from leaderboard l \n' +
+    'select email, name,MAX(amount) as max from leaderboard l \n' +
     'join sessions s on l.sessionID = s.id \n' +
     'join players p on s.playerID = p.id \n' +
-    'order by amount desc LIMIT 10;',
+    'group by email \n' +
+    'order by max desc LIMIT 10;',
     function (error, results, fields) {
       if (error) return;
       socket.emit('returnLeaderboard',results);
