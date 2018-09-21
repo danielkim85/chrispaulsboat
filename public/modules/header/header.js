@@ -7,7 +7,12 @@ angular.module('header', [])
       link: function($scope){
 
         var weddingDate = new Date(2018, 8, 23);
-
+        //current date
+        var current = new Date();
+        if(weddingDate < current){
+          $scope.weddingOver = true;
+          return;
+        }
         tikTok();
         $interval(tikTok,1000);
 

@@ -2,7 +2,7 @@ header{
 	padding:2px;
 	text-align:center;
 }
-header #countdown{
+header .countdown{
 	display:inline-block;
 	position:relative;
 	width:180px;

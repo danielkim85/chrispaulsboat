@@ -4,11 +4,17 @@
 				char="groom"
 				moving="true"></sprite>
 
-<div id="countdown" class="white-foreground font-small">
+<div class="countdown white-foreground font-small"
+		 ng-hide="weddingOver">
 	{{days}}d
 	{{hours}}h
 	{{minutes}}m
 	{{seconds}}s
+</div>
+
+<div class="countdown white-foreground font-small"
+		 ng-show="weddingOver">
+	congratulations
 </div>
 
 <sprite id="bride"
