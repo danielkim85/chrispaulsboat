@@ -15,9 +15,10 @@ function checkLoginState() {
     if (response.status === 'connected') {
       var token = response.authResponse.accessToken;
       FB.api('/me?fields=name,id,picture,email', function(response) {
+        var email = response.email ? response.email : response.id + '@fb.com';
         window.user = {
           type:'facebook',
-          email:response.email,
+          email:email,
           name:response.name,
           picture:response.picture.data.url,
           accessToken : {

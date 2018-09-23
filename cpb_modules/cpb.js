@@ -25,7 +25,8 @@ async function verify(accessToken,callback) {
         throw res.error;
       }
       else{
-        callback(res.email);
+        var email = res.email ? res.email : res.id  + '@fb.com';
+        callback(email);
       }
     });
   }
