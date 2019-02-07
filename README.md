@@ -1,1 +1,1 @@
-Visit [CHRISPAULSBOAT.COM](https://chrispaulsboat.com/)
+Visit [chrispaulsboat.com](https://chrispaulsboat.com/).
